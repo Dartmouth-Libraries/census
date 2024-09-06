@@ -1,0 +1,384 @@
+---
+title: "census1_NHcounties_tidycensus"
+author: "Jeremy Mikecz"
+date: '2022-09-21'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Getting Started with Census Data in R: Using the tidycensus package to import and analyze census data
+
+In this notebook, we will experiment with importing U.S. Census using the tidycensus package. We will then perform some basic analysis and do some basic mapping of a few variables in this dataset.
+
+Things to do in advance of lesson:
+  1. install RStudio / R (if not already)
+  2. within RStudio, install the packages listed below
+  3. request a census API key <!--insert instructions for how to do this-->
+  
+
+
+```{r}
+##WORKING WITH API
+# https://walker-data.com/tidycensus/articles/spatial-data.html
+setwd("C:/Users/F0040RP/documents/DartLib_RDS/censusData")
+# install.packages("tidycensus")
+library(tidyr)
+library(tidycensus)
+library(tidyverse)
+
+# install.packages("readr")
+library(readr)
+# install.packages("censusapi")
+# library(censusapi)
+library(dplyr)
+# install.packages("tigris")
+library(tigris)
+# install.packages("leaflet")
+library(leaflet)
+# install.packages("fiftystater") #not available with this version of R
+#To enable caching of data, set `options(tigris_use_cache = TRUE)`
+# in your R script or .Rprofile.
+
+# TO ACQUIRE A CENSUS API KEY
+## 1. Request a key here:
+   ## https://api.census.gov/data/key_signup.html
+## 2. Save the key in a plain text file that you save as "census_api.txt
+    ## within your working directory (the folder you have set as your w.d. with setwd() above)
+## 3. Open the census key in a plain text file with the commands below:
+# fileName<-"census_api.txt"
+# c<-read_file(fileName)
+# c<-readChar(fileName,file.info(fileName))
+
+
+
+
+# census_api_key(c, install = TRUE, overwrite=TRUE)  #install - only have to run this line once
+# First time, reload your environment so you can use the key without restarting R.
+# readRenviron("~/.Renviron")
+# You can check it with:
+Sys.getenv("CENSUS_API_KEY")
+```
+
+
+
+``` {r}
+#df <- read.csv("Late20C_data/ICPSR_08187-V1_1982StateMSADataBook/ICPSR_08187/DS0002/08187-0002-Data.txt")
+
+#df <- read.table("Late20C_data/ICPSR_08187-V1_1982StateMSADataBook/ICPSR_08187/DS0002/08187-0002-Data.txt",header=TRUE)
+
+setwd("C:/Users/F0040RP/documents/DartLib_RDS/censusData")
+
+#https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/read.fwf
+
+colwidths1<-c(3,1,1,2,4,4,5,2,55,rep(11,172))
+colwidths2<-c(3,1,1,2,4,4,5,2,rep(11,176))
+
+data1980<-read.fwf("Late20C_data/ICPSR_08187_v1_StateMetDataBook1982/DS0002/08187-0002-Data.txt", widths = list(colwidths1,colwidths2)) 
+
+# data1980<-read.fwf("Late20C_data/ICPSR_08187-V1_StateMetDataBook1982/ICPSR_08187/DS0002/08187-0002-Data.txt", widths = list(colwidths1,colwidths2)) 
+
+colnames(data1980)[1:15]<-c("id","seg","geoLevel","FIPS_SCSA","FIPS_SMSA","FIPS_NECMA","FIPS_STCTY","Filler","GeoName","landArea","poptot1980","SMSArank","perSqMi","poptot1970","poptot1960")
+
+
+sum(colwidths1)
+sum(colwidths2)
+```
+
+We can get data for the 2000, 2010, 2020 decennial censuses using tidycensus's get_decennial command (note: in a later lesson we will discuss how to find and use decennial census data from before 2000)
+
+For example, running the code below imports the data from one variable ("P013001"), for each state, for the 2010 census. 
+
+For more on using the tidycensus package, see [the webpage created by the package's authors.](https://walker-data.com/tidycensus/)
+
+```{r}
+age10 <- get_decennial(geography = "state", 
+                       variables = "P013001", 
+                       year = 2010)
+head(age10)
+
+```
+Let's explore what other types of data we can import using the census API.
+
+For example, using the same variable and census year, we can import data at different geographic levels.
+
+First, we can request county-level rather than state-level data.
+```{r}
+age10cty <- get_decennial(geography = "county", 
+                       variables = "P013001", 
+                       year = 2010)
+head(age10cty)
+```
+We may also request this same data at the census tract level. However, as the tidycensus page explains, you must select a state or county for data at the census tract level. You may not request data for the entire nation at the census tract level. See: [Geography in tidycensus](https://walker-data.com/tidycensus/articles/basic-usage.html#geography-in-tidycensus). 
+
+In this case, we selected data for California. 
+```{r}
+
+age10tr <- get_decennial(geography = "tract", 
+                         state = "CA",     
+                       variables = "P013001", 
+                       year = 2010)
+head(age10tr)
+
+```
+
+To see how large the imported "age10tr" dataset is, you may:
+1. Look at the summary of variables found in the Environment Pane of RStudio. It will indicate how many "observations" (or rows) in our dataframe, with each one, in this case, representing a separate census tract Meanwhile, the number of variables is equivalent with the number of columns. 
+
+2. Use the dim() function to retrieve the number of rows and observations
+
+
+
+```{r}
+dim(age10tr)
+
+```
+
+We can also retrieve additional information using commands like:
+
+```{r}
+colnames (age10tr)
+
+```
+
+``` {r}
+summary(age10tr)
+
+```
+
+
+```{r}
+# install.packages("Hmisc")
+library(Hmisc)
+describe(age10tr)
+```
+For more functions to retrieve summary statistics of a dataframe see [this page](https://www.datasciencemadesimple.com/descriptive-or-summary-statistics-in-r-2/) or do a search for "summary statistics in R."
+
+
+
+# Exercises: Import new dataframes into R and examine their summary statistics.
+
+1. How many census tracts are there in New Hampshire? Import decennial census data from 2020 for NH and then view its summary statistics to see how many tracts there are in NH. 
+
+```{r}
+
+```
+
+2. How many counties are there in the United States?
+
+```{r}
+
+```
+
+
+# Visualizing Census Data with tidycensus
+
+graph average age by state
+
+```{r}
+age10 %>%
+  ggplot(aes(x = value, y = reorder(NAME, value))) + 
+  geom_point()
+
+```
+
+One of the most powerful functions of tidycensus is the capability it offers to import geographic boundaries with its data, and thus map it relatively quickly. 
+
+For example, we can import the exact same data we used at the beginning of the lesson (average age data from the 2010 census by state), but this time ask for the geometry of each geographic unit (in this case, states) to be included by setting the geometry argument as TRUE:
+
+```{r}
+age10g <- get_decennial(geography = "state", 
+                       variables = "P013001", 
+                       geometry=TRUE,
+                       year = 2010)
+head(age10g)
+```
+We can then plot this information by state using the following code:
+
+For more info, see: [Spatial Data in tidycensus](https://walker-data.com/tidycensus/articles/spatial-data.html)
+
+```{r}
+age10g %>%
+  ggplot(aes(fill=value))+
+  geom_sf(color=NA)+
+  scale_fill_viridis_c(option='magma')+
+  xlim(-160,-65)
+
+
+#problem 1: extents
+#problem 2: projection
+#
+
+```
+This map uses a Meractor projection. Most geographers and cartographers have a deep dislike for the Mercator and the way it distorts area (i.e. minimizing Africa and exaggerating Greenland on a world map).
+
+Fortunately, depending on our needs we may choose another projection.
+
+Setting alternate projections, see: https://ggplot2.tidyverse.org/reference/ggsf.html
+
+```{r}
+# age10g2<-sf::st_transform(age10g,"+proj=aea +lon_0=-115.3125 +lat_1=27.1867275 +lat_2=64.0187053 +lat_0=45.6027164 +datum=WGS84 +units=m +no_defs") #proj from Projection Wizard
+
+age10g2<-sf::st_transform(age10g,"+proj=aea +lon_0=-115.3125 +lat_1=27.1867275 +lat_2=64.0187053 +lat_0=45.6027164 +datum=WGS84 +units=m +no_defs") #proj from Projection Wizard
+
+
+# ggplot()+geom_sf(data=age10g2)
+
+age10g2 %>%
+  ggplot(aes(fill=value))+
+  geom_sf(color=NA)+
+  scale_fill_viridis_c(option='magma')
+  # xlim(-420000,3480000)
+  # xlim(-160,-65)
+
+
+#problem: mapping Alaska and Hawaii
+## see: https://stackoverflow.com/questions/13757771/relocating-alaska-and-hawaii-on-thematic-map-of-the-usa-with-ggplot2
+```
+
+
+```{r}
+age10g2 %>%
+  ggplot(aes(fill=value))+
+  geom_sf(color=NA)+
+  scale_fill_viridis_c(option='magma')
+  # xlim(-420000,3480000)
+  # xlim(-160,-65)
+
+
+```
+
+# Working with other variables
+
+Thusfar, we have worked with only one or two variables. Decennial data, however, includes thousands of variables. 
+
+Load variables from the 2000 - 2020 censuses using the following code. Note: the 2020 census data available in tidycensus only has the "pl" dataset available, which only contains a limited range of variables (most about race/ethnicity). Meanwhile, the 2010 and 2000 datasets contain far more variables.
+
+1. 2000 census: "pl", "sf1", "sf2", "sf3", "sf4" datasets available for import
+2. 2010 census: "pl", "sf1", "sf2" datasets available
+3. 2000 census: "pl" dataset available
+
+```{r}
+decennial_2020_vars <- load_variables(
+  year = 2020, 
+  "pl", 
+  cache = TRUE
+)
+
+decennial_2000_vars <- load_variables(
+  year = 2000, 
+  "sf1", 
+  cache = TRUE
+)
+
+decennial_2010_vars <- load_variables(
+  year = 2010, 
+  "sf1", 
+  cache = TRUE
+)
+```
+
+
+Open and view the list of variables from the 2000 "sf1" dataset ("decennial_2000_vars") from the Environment Pane in RStudio. Previously we were exclusively using the variable for average age from the 2010 decennial census ("P013001"). Find the same variable from the 2000 decennial census. Note: the 2000 "sf1" dataset contains over 8000 variables. With the dataframe open, use the search bar (with magnifying glass symbol) to search for variables using the term "median age". 
+
+What is the name of the variable that records the average age for people (of all sexes, races) for a given geographic area?
+
+```{r}
+
+```
+
+
+
+Note: the above code chunk introduces a new function from tidycensus: load_variables(). We can view the full list of tidycensus functions using:
+
+```{r}
+lsf.str("package:tidycensus")
+```
+
+For more explanation, we should go to the reference page on the [tidycensus website](https://walker-data.com/tidycensus/reference/index.html), where you may click on any function to acquire more information. 
+
+
+```{r}
+pop_g<-get_decennial(geography = "state", 
+                       variables = c("P1_001N"),
+                       geometry=TRUE,
+                       year = 2020)
+
+
+pop_g2<-pop_g[c('GEOID','geometry')]
+#for some reason I cannot remove geometry column using regular subset functions
+
+pop<-get_decennial(geography = "state", 
+                       variables = c("P1_001N","P1_003N","P1_004N","P1_005N","P1_006N","P1_007N","P1_008N","P1_009N"),
+                       geometry=FALSE,
+                       year = 2020)
+
+
+#transform from wide to long format
+# pop_wide<-reshape(data=pop,idvar="GEOID",timevar="variable",direction="wide")
+
+pop_wide<-spread(pop,variable,value)
+
+#problem - working with data with geometry overloads R; maybe remove geometry and only add back in later!??
+
+```
+
+Rename columns using dplyr functon "rename"
+```{r}
+#white, AfAm, AmInd,
+pop_wide <- pop_wide %>%
+  rename("totpop"="P1_001N",
+         "white"="P1_003N",
+         "AfAm"="P1_004N",
+         "AmInd"="P1_005N",
+         "AsAm"="P1_006N",
+         "NH_PI"="P1_007N",
+         "Other1"="P1_008N",
+         "TwoOrMore"="P1_009N")
+#in theory all the individual race categories above should be equal to "totpop"; let's see if this is true:
+
+pop_wide$sum<-rowSums(pop_wide[,4:10])
+pop_wide$sum==pop_wide$totpop
+  
+pop_wide_wg<-merge(pop_g2,pop_wide,by="GEOID")
+```
+
+Reattach the geography
+```{r}
+
+```
+
+```{r}
+pop_wide_wg %>%
+  ggplot(aes(fill=TwoOrMore))+
+  geom_sf(color=NA)+
+  scale_fill_viridis_c(option='magma')+
+  xlim(-160,-65)
+
+```
+```{r}
+pop_wide_wg2<-sf::st_transform(pop_wide_wg,"+proj=aea +lon_0=-115.3125 +lat_1=27.1867275 +lat_2=64.0187053 +lat_0=45.6027164 +datum=WGS84 +units=m +no_defs") #proj from Projection Wizard
+
+
+# ggplot()+geom_sf(data=age10g2)
+
+pop_wide_wg2 %>%
+  ggplot(aes(fill=TwoOrMore))+
+  geom_sf(color=NA)+
+  scale_fill_viridis_c(option='magma')
+  # xlim(-420000,3480000)
+  # xlim(-160,-65)
+
+
+
+```
+
+
+# Working with other datasets from tidycensus
+
+```{r}
+
+
+```

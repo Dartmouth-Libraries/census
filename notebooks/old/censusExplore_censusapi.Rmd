@@ -1,0 +1,157 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+```{r}
+##WORKING WITH API
+# https://www.hrecht.com/censusapi/articles/example-list.html#american-community-survey
+# https://learn.r-journalism.com/en/mapping/census_maps/census-maps/
+# https://rconsortium.github.io/censusguide/r-packages-all.html
+setwd("C:/Users/F0040RP/documents/DartLib_RDS/censusData")
+# install.packages("tidycensus")
+library(tidycensus)
+library(tidyverse)
+# install.packages("readr")
+library(readr)
+# install.packages("censusapi")
+library(censusapi)
+library(dplyr)
+# install.packages("tigris")
+library(tigris)
+# install.packages("leaflet")
+library(leaflet)
+#To enable caching of data, set `options(tigris_use_cache = TRUE)`
+# in your R script or .Rprofile.
+fileName<-"census_api.txt"
+# c<-readChar(fileName,file.info(fileName))
+c<-read_file(fileName)
+
+
+# census_api_key(c, install = TRUE, overwrite=TRUE)  #install - only have to run this line once
+#problem census api uses CENSUS_KEY instead of CENSUS_API_KEY
+Sys.setenv(CENSUS_KEY=c)
+# census_key(c,install=TRUE)
+# First time, reload your environment so you can use the key without restarting R.
+# readRenviron("~/.Renviron")
+# You can check it with:
+# Sys.getenv("CENSUS_API_KEY")
+
+Sys.getenv("CENSUS_KEY")
+
+
+
+```
+
+
+Explore datasets available
+```{r}
+apis<-listCensusApis() #only goes back to 80s? decenniel census only back to 2000!!; 
+
+data2020 <- getCensus(
+    name = "dec/pl",
+    vintage = 2020,
+    vars = c("NAME", "P1_001N"), 
+    region = "place:*",
+    regionin = "state:05")
+
+head(data2020)
+```
+
+Get total population and the number of housing units for metropolitan/micropolitan statistical areas in 2010.
+```{r}
+data2010 <- getCensus(
+    name = "dec/sf1",
+    vintage = 2010,
+    vars = c("NAME", "P001001", "H010001"), 
+    region = "metropolitan statistical area/micropolitan statistical area:*")
+
+colnames(data2010) <- c("MSA", "NAME", "population","housingUnits")
+head(data2010)
+
+```
+# Show variable metadata for the P2 group
+```{r}
+group_p2 <- listCensusMetadata(
+    name = "dec/sf1",
+    vintage = 2010,
+    type = "variables",
+    group = "P2")
+```
+
+
+# Get the P2 variable group (URBAN AND RURAL)
+```{r}
+data2010b <- getCensus(
+    name = "dec/sf1",
+    vintage = 2010,
+    vars = "group(P2)", 
+    region = "metropolitan statistical area/micropolitan statistical area:*")
+head(data2010b)
+
+```
+
+```{r}
+tract_pop <- getCensus(
+    name = "dec/sf1",
+    vintage = 2010,
+    vars = "P001001", 
+    region = "block:*",
+    regionin = "state:36+county:027+tract:010000")
+head(tract_pop)
+
+
+```
+
+
+```{r}
+
+acs_income <- getCensus(
+    name = "acs/acs5",
+    vintage = 2020, 
+    vars = c("NAME", "B01001_001E", "B19013_001E"), 
+    region = "place:*",
+    regionin = "state:18")
+head(acs_income)
+
+```
+
+Get one variable from 1 ACS year
+```{r}
+state_pop <-  getCensus(name="acs/acs5", 
+                        vintage=2015,
+                        key=c, 
+                        vars=c("NAME", "B01003_001E"), 
+                        region="state:*")
+
+head(state_pop[order(-state_pop$B01003_001E),])
+```
+
+Cleaning up the column names
+
+```{r}
+colnames(state_pop) <- c("state_id", "NAME", "population")
+state_pop$state_id <- as.numeric(state_pop$state_id)
+state_pop<-state_pop[order(-state_pop$population),]
+head(state_pop)
+
+```
+# Hm, data comes in numbers of fully spelled out, not abbreviations
+
+# Did you know R has its own built in list of State names and State abbreviations?
+# Just pull it in this way to create a dataframe for reference
+
+```{r}
+state_off <- data.frame(state.abb, state.name)
+head(state_off)
+```
+
+

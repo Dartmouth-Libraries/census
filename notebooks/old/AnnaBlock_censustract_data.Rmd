@@ -1,0 +1,77 @@
+---
+title: "Anna - census data"
+author: "Jeremy"
+date: "2024-05-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+``` {r}
+##WORKING WITH API
+# https://walker-data.com/tidycensus/articles/spatial-data.html
+#setwd("C:/Users/F0040RP/documents/DartLib_RDS/censusData")
+# install.packages("tidycensus")
+library(tidyr)
+library(tidycensus)
+library(tidyverse)
+
+# install.packages("readr")
+library(readr)
+# install.packages("censusapi")
+# library(censusapi)
+library(dplyr)
+# install.packages("tigris")
+library(tigris)
+# install.packages("leaflet")
+library(leaflet)
+
+
+# TO ACQUIRE A CENSUS API KEY
+## 1. Request a key here:
+   ## https://api.census.gov/data/key_signup.html
+## 2. Save the key in a plain text file that you save as "census_api.txt
+    ## within your working directory (the folder you have set as your w.d. with setwd() above)
+## 3. Open the census key in a plain text file with the commands below:
+# fileName<-"census_api.txt"
+# c<-read_file(fileName)
+# c<-readChar(fileName,file.info(fileName))
+
+
+
+
+# census_api_key(c, install = TRUE, overwrite=TRUE)  #install - only have to run this line once
+# First time, reload your environment so you can use the key without restarting R.
+# readRenviron("~/.Renviron")
+# You can check it with:
+Sys.getenv("CENSUS_API_KEY")
+
+```
+Question: how to get decennial census data for 2020?
+
+```{r}
+vars <- load_variables(2020, "acs5", cache = TRUE)
+view(vars)
+```
+
+We can get data for the 2000, 2010, 2020 decennial censuses using tidycensus's get_decennial command (note: in a later lesson we will discuss how to find and use decennial census data from before 2000)
+
+For example, running the code below imports the data from one variable ("P013001"), for each state, for the 2010 census. 
+
+For more on using the tidycensus package, see [the webpage created by the package's authors.](https://walker-data.com/tidycensus/)
+
+```{r}
+age10 <- get_decennial(geography = "state", 
+                       variables = "P013001", 
+                       year = 2010)
+head(age10)
+
+```

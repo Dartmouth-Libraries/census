@@ -1,0 +1,190 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+```{r}
+##WORKING WITH API
+#https://walker-data.com/tidycensus/articles/basic-usage.html
+# https://www.ncdemography.org/2022/05/16/story-recipe-how-to-obtain-census-data-using-r-tidycensus/
+#R packages that work with census data: https://rconsortium.github.io/censusguide/r-packages-all.html
+setwd("C:/Users/F0040RP/documents/DartLib_RDS/censusData")
+# install.packages("tidycensus")
+library(tidycensus)
+library(tidyverse)
+# install.packages("readr")
+library(readr)
+fileName<-"census_api.txt"
+# c<-readChar(fileName,file.info(fileName))
+c<-read_file(fileName)
+
+
+# census_api_key(c, install = TRUE, overwrite=TRUE)  #install - only have to run this line once
+# First time, reload your environment so you can use the key without restarting R.
+readRenviron("~/.Renviron")
+# You can check it with:
+Sys.getenv("CENSUS_API_KEY")
+
+```
+
+get one variable across states
+
+```{r}
+age10 <- get_decennial(geography = "state", 
+                       variables = "P013001", 
+                       year = 2010)
+head(age10)
+
+```
+
+graph average age by state
+
+```{r}
+age10 %>%
+  ggplot(aes(x = value, y = reorder(NAME, value))) + 
+  geom_point()
+
+```
+graph average age by county
+```{r}
+age10c <- get_decennial(geography = "county", 
+                       variables = "P013001", 
+                       year = 2010)
+
+age10c %>%
+  ggplot(aes(x = value, y = reorder(NAME, value))) + 
+  geom_point()
+
+
+```
+average age by census tract
+```{r}
+age10t_nh <- get_decennial(geography = "tract", 
+                        state="NH",
+                        variables = "P013001", 
+                        year = 2010)
+
+age10t_nh %>%
+  ggplot(aes(x = value, y = reorder(NAME, value))) + 
+  geom_point()
+
+```
+
+Load variables
+
+```{r}
+decennial_2020_vars <- load_variables(
+  year = 2020, 
+  "pl", 
+  cache = TRUE
+)
+
+# 2010 Decennial Census Variables
+decennial_2010_vars <- load_variables(
+  year = 2010, 
+  "pl", 
+  cache = TRUE
+)
+
+
+# varlist <- load_variables(
+#   year = 1980, 
+#   "pl", 
+#   cache = TRUE
+# )
+
+#load variables -ACS data:
+v17 <- load_variables(2017, "acs5", cache = TRUE)
+
+# 2016 - 2020 5 Year American Community Survey (ACS) Variables
+acs_20_vars = load_variables(
+  year = 2020, 
+  "acs5",
+  cache = TRUE
+)
+
+```
+
+CREATE A LIST OF DESIRED VARIABLES:
+```{r}
+desired_vars = c(
+  all = "P2_001N",
+  hisp = "P2_002N",
+  white = "P2_005N",
+  baa = "P2_006N",
+  amin = "P2_007N",
+  asian = "P2_008N",
+  nhopi = "P2_009N",
+  other = "P2_010N",
+  multi = "P2_011N"
+)
+
+```
+retrieve census data
+```{r}
+census_data = get_decennial(
+  geography = "county",
+  state = "NC",
+  variables = desired_vars, #<-- here is where I am using the list
+  summary_var = "P2_001N", # <-- creates a column w/'total' variable
+  year = 2020,
+  sumfile = "pl"
+)
+
+```
+
+retrieve ACA data
+```{r}
+nc_county_income = get_acs(
+  geography = "county",
+  state = "NC",
+  table = "B19001")## Note that leaving the 'year' argument blank tells the API 
+  #to return the most recent year available. As of writing this, that is 2020 
+  #for both the ACS a
+
+nh_medinc <- get_acs(geography = "county", 
+              variables = c(medincome = "B19013_001"), 
+              state = "NH", 
+              year = 2018)
+
+```
+graphing margin of error:
+```{r}
+nh_medinc %>%
+  mutate(NAME = gsub(" County, New Hampshire", "", NAME)) %>%
+  ggplot(aes(x = estimate, y = reorder(NAME, estimate))) +
+  geom_errorbarh(aes(xmin = estimate - moe, xmax = estimate + moe)) +
+  geom_point(color = "red", size = 3) +
+  labs(title = "Household income by county in New Hampshire",
+       subtitle = "2014-2018 American Community Survey",
+       y = "",
+       x = "ACS estimate (bars represent margin of error)")
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```

@@ -1,0 +1,100 @@
+---
+title: "tidyverse"
+format: html
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+install.packages("installr")
+
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+require(installr)
+```
+
+```{r}
+updateR()
+```
+
+```{r}
+install.packages("devtools")
+```
+
+```{r}
+#library(devtools)
+install_github("pewresearch/pewmethods", build_vignettes = TRUE)
+
+```
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+Based on the book [R for Data Science (2e)](https://r4ds.hadley.nz/)
+
+R message says to install
+
+```{r}
+install.packages(c("broom", "conflicted", "dbplyr", "dplyr", "dtplyr", "forcats", 
+"ggplot2", "googledrive", "googlesheets4", "haven", "modelr", 
+"ragg", "readr", "readxl", "reprex", "rlang", "tidyr"))
+```
+
+Data Science in R says to install
+
+```{r}
+install.packages(
+  c("arrow", "babynames", "curl", "duckdb", "gapminder", 
+    "ggrepel", "ggridges", "ggthemes", "hexbin", "janitor", "Lahman", 
+    "leaflet", "maps", "nycflights13", "openxlsx", "palmerpenguins", 
+    "repurrrsive", "tidymodels", "writexl")
+  )
+```
+
+```{r}
+#install.packages("tidyverse")
+library(tidyverse)
+```
+
+```{r}
+tidyverse_update()
+```
+
+```{python}
+
+```
+
+# Data Visualization
+
+```{r}
+library(palmerpenguins)
+library(ggthemes)
+```
+
+```{r}
+
+```

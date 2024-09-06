@@ -1,0 +1,113 @@
+---
+title: "R Basics"
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# R Basics for the Beginning R Programmer
+
+## Basic Commands
+```{r}
+print("Hello World!")
+```
+
+## Basic Math
+
+Analyze the following operands. Then describe what they do in a comment (starting with "#") next to each line of code.
+```{r}
+8*3.33  
+67/5    
+246+632
+1156-1256 
+
+26/4      
+26 %/%4  #%/% = 
+26 %% 4  #%% = 
+
+4/2==2   #== (equals)
+3+7==8   
+
+3^2      #^ = 
+3^3
+3^4
+sqrt(9)  #sqrt = 
+
+```
+## Storing to Variables
+
+Note: in many programming languages, you would assign a variable using the equal ("=") sign.
+
+You may also do that in R, but best practices suggest using "<-" instead. Do an online search for "R = vs <-" and you'll see a lot of discussion about this. 
+
+```{r}
+x<- 6
+y<- 3 
+#one problem with the "<-" approach is that there is a key difference betweem the above code (which assigns 3 to the variable y, and the below code, which asks if y is less than negative 3)
+y< -3
+x*y
+x/y
+x+y
+x^y
+
+#meanwhile:
+z<-5.5 #is equivalent to z<- 5 NOT z< -5, but adding the space makes this clear
+print
+a< -8.3  #this one produces an error because we haven't yet assigned a value to a
+b<- 8.3 #but this one doesn't
+print(b)
+```
+We can use more descriptive variables as well:
+
+```{r}
+Item<-"thingamajig"
+Age<-44
+kg<-2.6
+heightCM<-68
+widthCM<-52
+lengthCM<-114
+
+Volm2<-(heightCM/100)*(widthCM/100)*(lengthCM/100)
+Volcm2<-Volm2*(100^3)
+print(Volm2)
+print(Volcm2)
+#density (kg/m3) = mass (kg) / volume (m3)
+dens<- kg / Volm2
+#FIX THIS!! how to print multiple items in R!!
+print(c("The thingamajig is",widthCM,"cm x",heightCM,"cm x",lengthCM, "and weighs",kg,"kg."))
+print(c("and thus has a density of",dens,"cubic meters (m3)."))
+```
+
+Is the area of a circular farm plot, with a radius of 200 meters, greater than that of a square plot with a width of 400 meters?
+```{r}
+print(pi)
+# you may recall from high school geometry that the area of a circle is equal to pi * radius squared (or A=pi*r2)
+ciArea = pi*200^2
+sqArea = 400^2
+ciArea>sqArea
+print(c("A circle with a radius of 200m has an area of ",ciArea,"meters squared, whereas a square with the same diameter/width has an area of ",sqArea,"meters squared."))
+```
+
+  
+
+
+
+
+
+## Working with Lists
+
+```{r}
+
+```
+
+## Working with Dataframes
+```{r}
+
+```
+
+```{r}
+
+```
