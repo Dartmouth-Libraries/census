@@ -1,0 +1,156 @@
+---
+title: "NH_CensusData"
+author: "Jeremy Mikecz"
+format: html
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+# Working with Census Data in R
+
+In this notebook, we will experiment with importing U.S. Census using the tidycensus package. We will then perform some basic analysis and do some basic mapping of a few variables in this dataset.
+
+Things to do in advance of lesson:
+
+1.  install RStudio / R (if not already)
+
+2.  within RStudio, install the packages listed below
+
+3.  request a census API key (see instructions below)
+
+```{r}
+#install.packages("tidycensus")
+library(tidyr)
+library(tidycensus)
+library(tidyverse)
+```
+
+## TO ACQUIRE A CENSUS API KEY
+
+1.  Request a key [here:](https://api.census.gov/data/key_signup.html)
+2.  Save the key in a plain text file that you save as ".Renviron" in the root directory of this project. In the top line of this document, record the API Key like this:
+
+`CENSUS_API_KEY={insert API key here}`
+
+3.  Note: Unlike Python, in R you do not place quotes around the API Key.
+
+<!-- -->
+
+3.  Note #2: The [.Renviron file must end with a new line](https://rstats.wtf/r-startup.html) so press RETURN after the line with the key to ensure there is a blank line at the end of this file. If you're using an editor that shows line numbers, there should be two lines, where the second one is empty.
+4.  Restart R. .Renviron is only processed at the start of an R session. As an alternative, you can also run \`readRenviron("\~/.Renviron") to reload your environment without restarting.
+5.  After restarting R, open the census key from .Renviron with the commands below:
+
+```{r}
+Sys.getenv("CENSUS_API_KEY")
+
+
+```
+
+## Datasets:
+
+### Decennial Census datasets
+
+"sf1": 2000 and 2010
+
+"sf2": 2000 and 2010
+
+"sf3" and "sf4": 2000 only
+
+"dp": 2020 only
+
+"pl" - redistricting files: 2000, 2010, 2020 (for 1990: message: "we recommend using NHGIS and the ipumsr R package.")
+
+```{r}
+#vars <- load_variables(2020, "pl", cache = TRUE)
+vars <- load_variables(2022, "acs5", cache = TRUE)
+view(vars)
+
+write.csv(vars, "acs5_2022_variables.csv", row.names=FALSE)
+
+```
+
+### American Community Survey (ACS) datasets
+
+According to the [tidycensus documentation](https://walker-data.com/tidycensus/articles/basic-usage.html) ACS 1-year data is available since 2005 for geographic units with a population of 65,000 or greater and from the 5-year ACS for all geographies down to the block group level, starting with the 2005-2009 period.
+
+```{r}
+
+
+```
+
+```{r}
+NH_congdists <- get_decennial(geography = "congressional district", 
+                         state = "NH", 
+                         variables = c("P5_002N"),
+                         year = 2020)
+head(NH_congdists)
+
+```
+
+```{r}
+get_acs(geography = "congressional district", 
+                         state = "NH", 
+                         variables = c("P5_002N"),
+                         year = 2020)
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```
