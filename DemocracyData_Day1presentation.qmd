@@ -1,0 +1,22 @@
+---
+title: "Democracy's Data"
+subtitle: "An Introduction to Essential Data for Democracy"
+author: "Jeremy Mikecz"
+institute: "Research Data Services, Dartmouth Libraries"
+date: "October 2024"
+format: 
+  revealjs:
+    theme: sky
+editor: visual
+logo: "images/logo_white.png"
+---
+
+# \[Hook\]
+
+# Research Data Services
+
+# The Census
+
+## Dan Bouk, *Democracy's Data*
+
+<center><img src="/images/Bouk_bookcover.jpg" height="600"></center>

@@ -1,0 +1,259 @@
+---
+title: "tidyverse intro"
+author: "Jeremy Mikecz"
+format: html
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+# Introduction to Tidyverse
+
+[tidyr cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf)
+
+For a more detailed introduction to working with tidy data in R see:
+
+-   Wickham, Çetinkaya-Rundel, and Grolemund, *R for Data Science*, Ch. 5 ["Data Tidying"](https://r4ds.hadley.nz/data-tidy).
+
+-   Grolemund, [A Tidyverse Cookbook](https://rstudio-education.github.io/tidyverse-cookbook/) (2020).
+
+-   Silge and Robinson, [Text Mining with R](https://www.tidytextmining.com/), Ch. 1 "The tidy text format".
+
+-   
+
+```{r}
+packrat::on()
+#packrat::snapshot()
+#packrat::search_path()=
+```
+
+```{r}
+#tidyverse_update()
+library(tidyverse)
+#tidyverse_packages()
+```
+
+```{r}
+starwars
+
+```
+
+## Combine functions into a pipe
+
+Using the symbol `%>%` we can chain multiple functions together. Each new function in the pipeline operates on the results produced by the previous function.
+
+Chaining functions together in a pipe like this:
+
+```         
+starwars %>% 
+  group_by(species) %>% 
+  summarise(avg_height = mean(height, na.rm = TRUE)) %>% 
+  arrange(avg_height)
+```
+
+produces the same results as nesting a series of functions within another:
+
+```         
+arrange(
+  summarise(
+    group_by(starwars, species), 
+    avg_height = mean(height, na.rm = TRUE)
+  ), 
+  avg_height
+)
+```
+
+or calling each function in order:
+
+```         
+x1 <- starwars 
+x2 <- group_by(x1, species)
+x3 <- summarise(x3, avg_height = mean(height, na.rm = TRUE))
+arrange(x3, avg_height)
+```
+
+```{r}
+starwars %>%
+  group_by(species)
+```
+
+```{r}
+starwars %>%
+  group_by(species) %>%
+  summarise(avg_height = mean(height, na.rm = TRUE)) 
+```
+
+```{r}
+starwars %>% 
+  group_by(species) %>% 
+  summarise(avg_height = mean(height, na.rm = TRUE)) %>% 
+  arrange(avg_height)
+
+```
+
+By default `%>%` passes the result of the left hand side to the the first unnamed argument of the function on the right hand side. To override this default, use `.` as a placeholder within the function call on the right hand side. `%>%` will evaluate `.` as the result of the left hand side, instead of passing the result to the first unnamed argument.
+
+```{r}
+starwars %>%
+  lm(mass ~ height, data = .)
+```
+
+```{r}
+data <- read_csv("census/data/census1970.csv")
+data
+```
+
+```{r}
+df <- read.csv("census/data/census1970.csv")
+df
+
+```
+
+## Tidy Data
+
+From the [Tidyverse cookbook](https://rstudio-education.github.io/tidyverse-cookbook/tidy.html):
+
+Data tidying refers to reshaping your data into a tidy data frame or [tibble](https://rstudio-education.github.io/tidyverse-cookbook/how-to-use-this-book.html#tidy-data). Data tidying is an important first step for your analysis because every tidyverse function will expect your data to be stored as **Tidy Data**.
+
+Tidy data is tabular data organized so that:
+
+1.  Each column contains a single variable
+
+2.  Each row contains a single observation
+
+Tidy data is not an arbitrary requirement of the tidyverse; it is the ideal data format for doing data science with R. Tidy data makes it easy to extract every value of a variable to build a plot or to compute a summary statistic. Tidy data also makes it easy to compute new variables; when your data is tidy, you can rely on R's rowwise operations to maintain the integrity of your observations. Moreover, R can directly manipulate tidy data with R's fast, built-in vectorised observations, which lets your code run as fast as possible.
+
+The definition of Tidy Data isn't complete until you define variable and observation, so let's borrow two definitions from [*R for Data Science*](https://r4ds.had.co.nz/exploratory-data-analysis.html):
+
+1.  A **variable** is a quantity, quality, or property that you can measure.
+
+2.  An **observation** is a set of measurements made under similar conditions (you usually make all of the measurements in an observation at the same time and on the same object).
+
+As you work with data, you will be surprised to realize that what is a variable (or observation) will depend less on the data itself and more on what you are trying to do with it. With enough mental flexibility, you can consider anything to be a variable. However, some variables will be more useful than others for any specific task. In general, if you can formulate your task as an equation (math or code that contains an equals sign), the most useful variables will be the names in the equation.
+
+### Create a tibble from scratch
+
+```{r}
+omitb <- tribble(~name, ~occupation, ~apartment, ~is_suspect, ~is_dead,
+            "Charles", "washed-up actor", "12D", "no", "no",
+            "Mabel", "unemployed never-war", "14C", "no", "no",
+            "Oliver", "theater director", "10A", "no", "no",
+            "Howard", "childless cat guy", "6F", "yes", "no",
+            "Bunny", "petty despot", "1A", "no", "maybe"
+)
+omitb
+```
+
+Use the **tribble** format to create a tibble by using a syntax that lines up the rows neatly in a way that will preview the result.
+
+You can also create the same tibble using the **tibble** function this way
+
+```{r}
+tibble(name = c("Charles", "Mabel", "Oliver", "Howard", "Bunny"),
+       occupation = c("washed-up actor", "unemployed never-was", "theater director", "childless cat guy", "petty despot"),
+       apartment = c("12D", "14C", "10A", "6F", "1A"),
+       is_suspect = c("no", "no", "no", "yes", "no"),
+       is_dead = c("no", "no", "no", "no", "maybe"),
+       )
+```
+
+## Dataframes vs. tibbles
+
+### Convert a dataframe into a tibble
+
+```{r}
+head(df)
+
+```
+
+```{r}
+df2tib <- as_tibble(df)
+```
+
+## Sort Table (tibble)
+
+```{r}
+starwars %>%
+  arrange(homeworld)  #descending order: arrange(desc(homeworld))
+```
+
+## Filter Table
+
+```{r}
+starwars %>%
+  filter(species=="Droid")
+```
+
+## Subset Tibble by Column Names
+
+```{r}
+starwars %>%
+  select(name, homeworld, species)  #reorder names here to reorder columns
+
+```
+
+### For a range of columns
+
+```{r}
+starwars %>% 
+  select(name:hair_color, species)
+
+```
+
+### Rename columns
+
+```{r}
+starwars %>%
+  rename(character = name, planet = homeworld)
+```
+
+```{r}
+starwars$vehicles[1]
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
