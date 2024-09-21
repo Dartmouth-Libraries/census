@@ -5,30 +5,9 @@ format: html
 editor: visual
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
-```
-
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is displayed).
-
 # Working with Census Data in R
 
-In this notebook, we will experiment with importing U.S. Census using the tidycensus package. We will then perform some basic analysis and do some basic mapping of a few variables in this dataset.
+In this notebook, we will experiment with importing U.S. Census using the tidycensus package. We will then perform some basic analysis and mapping of a few variables in this dataset.
 
 Things to do in advance of lesson:
 
@@ -40,9 +19,10 @@ Things to do in advance of lesson:
 
 ```{r}
 #install.packages("tidycensus")
-library(tidyr)
-library(tidycensus)
+#library(tidyr)
 library(tidyverse)
+library(tidycensus)
+
 ```
 
 ## TO ACQUIRE A CENSUS API KEY
@@ -81,6 +61,19 @@ Sys.getenv("CENSUS_API_KEY")
 "pl" - redistricting files: 2000, 2010, 2020 (for 1990: message: "we recommend using NHGIS and the ipumsr R package.")
 
 ```{r}
+
+NH_congdists <- get_decennial(geography = "congressional district", 
+                         state = "NH", 
+                         variables = c("P5_002N"),
+                         year = 2020)
+head(NH_congdists)
+```
+
+### American Community Survey (ACS) datasets
+
+According to the [tidycensus documentation](https://walker-data.com/tidycensus/articles/basic-usage.html) ACS 1-year data is available since 2005 for geographic units with a population of 65,000 or greater and from the 5-year ACS for all geographies down to the block group level, starting with the 2005-2009 period.
+
+```{r}
 #vars <- load_variables(2020, "pl", cache = TRUE)
 vars <- load_variables(2022, "acs5", cache = TRUE)
 view(vars)
@@ -89,29 +82,27 @@ write.csv(vars, "acs5_2022_variables.csv", row.names=FALSE)
 
 ```
 
-### American Community Survey (ACS) datasets
+```{r}
+?load_variables
 
-According to the [tidycensus documentation](https://walker-data.com/tidycensus/articles/basic-usage.html) ACS 1-year data is available since 2005 for geographic units with a population of 65,000 or greater and from the 5-year ACS for all geographies down to the block group level, starting with the 2005-2009 period.
+```
+
+get_acs variables do not include the "congressional district" geography, even though \[tidycensus documentation\](https://walker-data.com/tidycensus/articles/basic-usage.html) says it should.
 
 ```{r}
+vars %>%
+  distinct(geography)
 
 
 ```
 
-```{r}
-NH_congdists <- get_decennial(geography = "congressional district", 
-                         state = "NH", 
-                         variables = c("P5_002N"),
-                         year = 2020)
-head(NH_congdists)
-
-```
+[overview of U.S. census geography](https://learn.arcgis.com/en/related-concepts/united-states-census-geography.htm)
 
 ```{r}
-get_acs(geography = "congressional district", 
+get_acs(geography = "tract", 
                          state = "NH", 
-                         variables = c("P5_002N"),
-                         year = 2020)
+                         variables = c("B01001A_001"),
+                         year = 2022)
 
 ```
 

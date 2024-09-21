@@ -15,8 +15,32 @@ logo: "images/logo_white.png"
 
 # Research Data Services
 
+# Data and Democracy
+
+\[relationship between data and democracy\]
+
+## Counting People
+
+-   population census (full count)
+
+-   surveys (sample count)
+
+## Counting Votes
+
+## Quantifying Opinions & Attitudes
+
+-   surveys (generally)
+
+-   polls
+
+# Maps and Democracy
+
+## Gerrymandering & Congressional Districts
+
+## Mapping Opportunity
+
 # The Census
 
 ## Dan Bouk, *Democracy's Data*
 
-<center><img src="/images/Bouk_bookcover.jpg" height="600"></center>
+<center><img src="/images/Bouk_bookcover.jpg" height="600"/></center>

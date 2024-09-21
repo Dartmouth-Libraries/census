@@ -1,0 +1,34 @@
+---
+title: "Democracy's Data 2: Counting People"
+subtitle: "An Introduction to Essential Data for Democracy"
+author: "Jeremy Mikecz"
+institute: "Research Data Services, Dartmouth Libraries"
+date: "October 2024"
+format: 
+  revealjs:
+    theme: sky
+editor: visual
+logo: "images/logo_white.png"
+---
+
+# Getting a Census API Key {.scrollable}
+
+1.  Request a key [here:](https://api.census.gov/data/key_signup.html)
+2.  Save the key in a plain text file that you save as ".Renviron" in the root directory of this project. In the top line of this document, record the API Key like this:
+
+`CENSUS_API_KEY={insert API key here}`
+
+3.  Note: Unlike Python, in R you do not place quotes around the API Key.
+
+<!-- -->
+
+4.  Note #2: The [.Renviron file must end with a new line](https://rstats.wtf/r-startup.html) so press RETURN after the line with the key to ensure there is a blank line at the end of this file. If you're using an editor that shows line numbers, there should be two lines, where the second one is empty.
+
+<!-- -->
+
+3.  Restart R. .Renviron is only processed at the start of an R session. As an alternative, you can also run \`readRenviron("\~/.Renviron") to reload your environment without restarting.
+4.  After restarting R, open the census key from .Renviron with the commands below:
+
+`{r} Sys.getenv("CENSUS_API_KEY")}`
+
+## 
