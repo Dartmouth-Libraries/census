@@ -5,27 +5,6 @@ format: html
 editor: visual
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
-```{r}
-1 + 1
-```
-
-You can add options to executable code like this
-
-```{r}
-#| echo: false
-2 * 2
-```
-
-The `echo: false` option disables the printing of code (only output is displayed).
-
 # Introduction to Tidyverse
 
 [tidyr cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/tidyr.pdf)
@@ -38,9 +17,16 @@ For a more detailed introduction to working with tidy data in R see:
 
 -   Silge and Robinson, [Text Mining with R](https://www.tidytextmining.com/), Ch. 1 "The tidy text format".
 
--   
+## *Optional*: Working with Virtual Environments
+
+If you are using R for a variety of different projects, you may risk encountering dependency conflicts. These occur when you may need Package *A* for a text analysis project and that package requires version 1.0 of Package *B*, while Package *C* for a machine-learning projects requires version 2.0 of Package *B*.
+
+Setting up a virtual environment allows you to avoid such conflicts. Often, programmers use a different virtual environment for each project (and each project should be stored in a separate project folder). This also provides another benefit. When sharing code with others, programmers can send a list of packages (and their specific versions) to collaborators so that they can reproduce the exact same environment on their machines. This, in turn, ensures that the experience of running the team's code is exactly the same for project members each working on their own computers.
+
+In Python, users typically use the **venv** library to create and use virtual environments. In R, users often use the **Packrat** library / package. To set up a local virtual environment with packrat, you must first install packrat using `install.packages("packrat")`. Then, from within your project folder, initialize it using the command `packrat::init()`. Then, R should activite your new virtual environment automatically whenever you work in that project folder. To ensure it is activated, however, you can run the code `packrat::on()`. To deactivate, simply run `packrat::off()`.
 
 ```{r}
+#packrat::off()
 packrat::on()
 #packrat::snapshot()
 #packrat::search_path()=

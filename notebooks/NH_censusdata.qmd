@@ -11,7 +11,7 @@ In this notebook, we will experiment with importing U.S. Census using the tidyce
 
 Things to do in advance of lesson:
 
-1.  install RStudio / R (if not already)
+1.  install RStudio and R (if not already)
 
 2.  within RStudio, install the packages listed below
 
