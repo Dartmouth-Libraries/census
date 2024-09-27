@@ -1,0 +1,21 @@
+---
+title: "Democracy's Data 3: Surveying People"
+subtitle: "Polls, Surveys, & Samples"
+author: "Jeremy Mikecz"
+institute: "Research Data Services, Dartmouth Libraries"
+date: "October 2024"
+format: 
+  revealjs:
+    theme: sky
+    navigation-mode: vertical
+editor: visual
+logo: "images/logo_white.png"
+---
+
+# From Full Counts to Surveys
+
+<!-- Bouk 237-->
+
+# Sampling
+
+Igo, *Averaged American*

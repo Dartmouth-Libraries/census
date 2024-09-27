@@ -7,9 +7,32 @@ date: "October 2024"
 format: 
   revealjs:
     theme: sky
+    navigation-mode: vertical
 editor: visual
 logo: "images/logo_white.png"
 ---
+
+# Importance of Counting People
+
+2020 Census Question Controversy
+
+3/5 Compromise
+
+## (Not) Counting People
+
+<!--WEB DuBois book review; see also Bouk 132-->
+
+## Miscounting People
+
+<!--Bouk 59 misleading analysis of Black vs Insane/Idiot pop-->
+
+<!-- also Bouk Ch. 5 - study of under-count of Black population-->
+
+![Kelly Miller (1863-1939)](images/miller_kelly.jpg)
+
+## Naming People
+
+<!-- Langston Hughes poem; also Frederick Douglass'many names Bouk 63-->
 
 # Getting a Census API Key {.scrollable}
 
