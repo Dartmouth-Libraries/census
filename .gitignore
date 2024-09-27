@@ -1,3 +1,7 @@
+#files not for public
+hidden-data/
+hidden-images/
+
 # History files
 .Rhistory
 .Rapp.history

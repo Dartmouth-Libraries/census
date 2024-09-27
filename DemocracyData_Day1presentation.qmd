@@ -7,17 +7,87 @@ date: "October 2024"
 format: 
   revealjs:
     theme: sky
+    navigation-mode: vertical
 editor: visual
 logo: "images/logo_white.png"
 ---
 
-# \[Hook\]
+# Data in Your Daily Life
+
+:::{.incremental}
+
+1.  List every aspect of your typical day that is transformed into data and recorded by someone or some device.
+2.  Discuss with a partner or two. Review your list:
+    1.  Circle each set of data that you think may be used to your benefit.
+    2.  Underline each set of data that someone else may profit from.
+    3.  Place an X by each set of data that could potentially be used against you.
+
+:::
+
+# Democracy's Data
 
 # Research Data Services
 
+# The Census-Takers comes to Town 
+
+<center>![](/images/Andes_valley.jpg)</center>
+
+::: notes
+<font size="5">After an all-night rain, the dawn was cloudy. The town's residents went about their usual tasks. As the sun began heating the valley, the mists drifted up the mountain slopes. Then the villagers saw them: the feared inspection party coming up the road.
+
+From the moment the inspection party was sighted, all normal activities stopped. Many youths grabbed warm clothing and food and fled the village to hide in the mountains and in caves as far from the town's roads as possible. Women secreted food and possessions. Children were distributed among different households and instructed not to betray their parents' or older siblings' location....</font>
+:::
+
+## Data Collection
+
+<center>![](/images/Andes_valley.jpg)</center>
+
+Questions about data collection
+
+::: notes
+-   1562 - Peru:
+
+-   not a representative democracy; Indigenous people just saw counting as a threat - a means to heavily tax them with no tangible returns.
+
+-   this example - paraphrased from an ethnographic history by Enrique Mayer - who takes mundane census documents and seeks to imagine the conditions under which their information was collected from the perspective of Indigenous townspeople
+
+    -   not all speculation - there is documentary evidence of Indigenous communities hiding their tribute-age males and their livestocks
+
+-   In a democracy purported to serve the people: for what purpose are people counted? data collected? who has the right to collect this data and under what conditions? Who oversees this data collection? What rights do people and communities have to decide how their data are used?
+:::
+
+## Data Analysis
+
+::: notes
+:::
+
 # Data and Democracy
 
-\[relationship between data and democracy\]
+## Dan Bouk, *Democracy's Data (2022)*
+
+<center>![](/images/Bouk_bookcover.jpg){height="600"}</center>
+
+-   "There are stories in the data. You just have to know how to read them."
+
+-   "... must widen our lens to take in not only the numbers but also the processes that created those numbers."
+
+## Role of Data in a Democracy
+
+<!--[relationship between data and democracy - why data is essential for a democracy]-->
+
+"As long as the people to be counted have a significant say in what matter and how the numbers will be used, then the census overflows with democratic potential. As long as the people control their own enumeration, then the quest to count each person is one of the purest expressions of democratic values." (Bouk 2022, 4)
+
+## What is being counted / quantified?
+
+::: {.incremental}
+
+-   Counting People (censuses, demographic surveys)
+
+-   Counting Votes (election data)
+
+-   quantifying opinions and attitudes (surveys and polls)
+
+:::
 
 ## Counting People
 
@@ -27,20 +97,159 @@ logo: "images/logo_white.png"
 
 ## Counting Votes
 
+-   election results
+
+-   exit polls
+
 ## Quantifying Opinions & Attitudes
 
 -   surveys (generally)
 
 -   polls
 
-# Maps and Democracy
+## Data Formats
+
+-   forms
+
+-   aggregated data tables (handwritten --\> type --\> digital)
+
+-   plots & graphs
+
+-   maps
+
+# 1. Counting People
+
+# The United States Decennial Census (1790-2020)
+
+## Dan Bouk, *Democracy's Data (2022)*
+
+<center>![](/images/Bouk_bookcover.jpg){height="600"}</center>
+
+-   focus on 1940 census - released in 2012
+
+    -   most recent census to be released (with full individual-level data) until 2022 (1950 Census)
+
+## 1940 Census
+
+![1930 Census Form](hidden-images/PaulMikecz_1930a.png){fig-align="center"}
+
+::: notes
+We started with the South American example for two reasons:
+
+1.  to examine how data collection for many communities only seems to do harm
+2.  to examine the on-the-ground process of data collection
+
+In social science academic research we tend to focus on the aggregated data, forgetting that each data point is a human, that fallible humans collected the data, and that the methods of data collection and compilation resulted not just from the best scientific methods but also arose within divided political and cultural contexts.
+
+Fear and prejudice mixed with well-meaning concerns about improving people's lives and solving problems.
+:::
+
+## A Mystery in the Data... (1910-1930 Censuses)
+
+![1930 Census](hidden-images/PaulMikecz_1930b.png)
+
+::: notes
+Answer to a family mystery: who was Paul Mikecz or Pavel Mee-kets? My father never knew what happened to his grandfather being brought to his funeral at age 27. Whenever he asked his parents, they refused to answer and sternly told him not to ask.\
+\
+1910 census: listed alone as a recently arrived immigrant listed in a boarding house. Identified as employed as a day laborer.
+
+1920 census: wife and most of rest of family has rejoined them - although 2 teenage daughters were left behind in Croatia - and my grandfather was not yet born
+
+1930 census: here some cracks in the story begin to appear on paper. Here Paul's wife, my great-grandmother, is noted to not speak English, and they have X children under the age of X, with all but the oldest and youngest - my grandfather - being girls. Also, under employment Paul is listed as unemployed with the code: 25 1a. Or is it 25-100?
+:::
+
+## 1940 Census
+
+![](hidden-images/PaulMikecz_1940a.png){fig-align="center"}
+
+::: notes
+1940 Census: Paul is listed alone and living in a group home. In some way, he had come full circle from the 1910 census when he lived in a boarding house as a recently-arrived immigrant and day laborer. But, What;s going on now in 1940?
+:::
+
+## ??
+
+![Milwaukee County Asylum for Chronic Insane](hidden-images/PaulMikecz_1940b.png){fig-align="center"}
+
+::: notes
+1940 Census: housed in the Milwaukee County Asylum for Chronic Insane
+
+historical context - how and why people were institutionalized compared to today
+
+we'll come back to the importance of this historical context...
+
+1950 Census - recently released: he was still there
+:::
+
+# From Census Collection to Census Data
+
+::: incremental
+-   **Original Census Forms**: home visit / arrival of census form in the mail
+
+    -   only leaving trace clues to larger human stories
+
+-   **Individual-level data**
+
+-   **Aggregated data**
+
+    -   total nationwide count
+
+    -   counts grouped by category (age group, race, gender, and much more...)
+
+    -   counts grouped by geographic unit (state, county, census tract, census block, etc.)
+:::
+
+::: notes
+other human stories
+
+\[review Bouk!!\]
+:::
+
+# Historical Context
+
+Influences:
+
+-   Questions asked
+
+-   Counting Methods
+
+<!--https://www.casscolibrary.org/wp-content/uploads/Genealogy/Comparison-of-Census-Information-Chart.pdf-->
+
+## 1930 Census
+
+![](hidden-images/PaulMikecz_1930b.png){fig-align="center"}
+
+::: notes
+1930 Census: asked about unemployment and had a long schedule for identifying different types of unemployment (unfortunately key to codes now lost)
+
+also first to ask whether a person was a war veteran. Likely concern about WWI
+:::
+
+## 1910 Census
+
+## 1920 Census
+
+::: notes
+although 1900 census was first to inquire whether respondent was an immigrant, 1920 first time more detailed Qs were asked about the origins and languages spoken by immigrants.
+
+1910s - last wave of great immigration numbers, especially from Europe; WWI and more restrictive quotas slowed some of these flows??
+:::
+
+## 1940 Census
+
+::: notes
+1940 Census: first to ask where people lived 5 years earlier;
+
+goal: chart internal migration (at a point that external migration had dwindled?); also economic crisis + environmental crisis in Great Plains states caused a lot of families to move
+:::
+
+# 2. Quantifying Opinions & Attitudes
+
+# 3. Data Formats: Maps
 
 ## Gerrymandering & Congressional Districts
 
 ## Mapping Opportunity
 
-# The Census
+# 
 
-## Dan Bouk, *Democracy's Data*
-
-<center><img src="/images/Bouk_bookcover.jpg" height="600"/></center>
+## 
