@@ -12,7 +12,7 @@ editor: visual
 logo: "images/logo_white.png"
 ---
 
-## Data & Democracy 
+## Data & Democracy
 
 ::: incremental
 1.  What conditions does a society need for democracy to function effectively?
@@ -37,19 +37,141 @@ What is the role of data in a democracy?
 Why
 
 1.  democracy threatened {democracy headlines}
-2.  Jan. 6 headlines
-3.  \[Dem side - changing courts??\]
-4.  Bouk book
+    1.  Jan. 6 headlines
+    2.  \[Dem side - changing courts??\]
+2.  empirical research "look to the data"
+    1.  historical demography project, University of Colorado - 1940 census
+    2.  social science research, policy-making, problem-solving
+3.  Bouk book
+:::
+
+\-\--
+
+1.  Threats to democracy
+
+::: notes
+\[headlines about democracy\]
+
+\[photo of 1/6/21\]
+
+\[confidence in inst's\]
+:::
+
+\-\--
+
+2.  Empirical Study of Demographic & Other Data
+
+::: notes
+\[U-Co study\]
+
+\[many other uses... census & other data\]
+:::
+
+\-\--
+
+3.  Critical Data Science
+
+::: notes
+\[O'Neill or similar books!\]
+:::
+
+\-\--
+
+<center>![](images/Bouk_bookcover.jpg){width="300"}</center>
+
+4.  Dan Bouk, *Democracy's Data* (2022)
+
+::: notes
 :::
 
 ## Democracy's Data Workshop Series
 
-Wed. 10/9: Democracy's Data: An Introduction to Essential Data for Democracy
+Wed. 10/9: An Introduction to Essential Data for Democracy
 
-Wed. 10/23 Democracy's Data 2: Counting People, Examining Census Data in R
+Wed. 10/23 Counting People, Examining Census Data in R
 
-Wed. 10/30 Democracy's Data 3: Attitudes about Democracy and Elections - Working with Gallup Data in R
+Wed. 10/30 Attitudes about Democracy and Elections - Working with Gallup Data in R
 
 ## Series Goals
 
 ## Today's Goals
+
+1.  A History of Data's Role in Democracy
+    1.  Origins of Statistics, Data Visualization, and Data Science - Quantifying Humans - Their Lives, Deaths, Activities, Health, and Opinions
+2.  Uses & Abuses of Data in Democracies
+3.  A Data Humanism Approach
+4.  Essential Data for Democracy (at Dartmouth & Beyond)
+
+# History of Data's Role in Democracy
+
+## \[Problems Of\]
+
+## Counting the Living / Counting the Dead
+
+## The Rise of STAT-\*istics\*
+
+## U.S. Constitution
+
+## Quantifying Deviance
+
+## Averaging / Sampling
+
+::: notes
+the average American: https://www.saturdayeveningpost.com/2021/12/who-exactly-is-the-average-american/ (2021)
+:::
+
+## Computers
+
+# Uses & Abuses
+
+# A Data Humanism Approach: The U.S. Census
+
+\[Census Sample - Form\]
+
+::: notes
+changing forms over time
+
+https://www.census.gov/library/publications/2002/dec/pol_02-ma.html
+:::
+
+## The Race Question
+
+::: notes
+::: notes
+:::
+:::
+
+# Essential Data for Democracy
+
+## Census Data
+
+1.  1990 - 2020: Census API
+2.  1790 - 2010?: ICPSR
+3.  Social Explorer
+
+## Social Explorer
+
+## Other Demographic Data
+
+1.  American Community Survey - API
+
+## The Opportunity Atlas
+
+## Polling / Survey Data
+
+1.  Dartmouth: Gallup Poll Data
+    1.  **Confidence in Institutions**
+
+## Election Data?
+
+## The Press
+
+full-text resources
+
+## Social Media
+
+## Legislative Data
+
+## Judicial Data
+
+# Reflections
