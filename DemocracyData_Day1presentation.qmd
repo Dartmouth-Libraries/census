@@ -14,21 +14,25 @@ logo: "images/logo_white.png"
 
 # Data in Your Daily Life
 
-:::{.incremental}
-
+::: incremental
 1.  List every aspect of your typical day that is transformed into data and recorded by someone or some device.
 2.  Discuss with a partner or two. Review your list:
     1.  Circle each set of data that you think may be used to your benefit.
     2.  Underline each set of data that someone else may profit from.
     3.  Place an X by each set of data that could potentially be used against you.
-
 :::
 
 # Democracy's Data
 
+1.  Data Collection & Governance
+2.  Data in a Democracy: Uses, Misuses, & Abuses
+3.  Data & the Human Stories Behind it
+4.  
+5.  Data \@ Dartmouth: Datasets --\> Social Explorer
+
 # Research Data Services
 
-# The Census-Takers comes to Town 
+# The Census-Takers comes to Town
 
 <center>![](/images/Andes_valley.jpg)</center>
 
@@ -67,42 +71,68 @@ Questions about data collection
 
 # Data and Democracy
 
-## Dan Bouk, *Democracy's Data (2022)*  {.scrollable}
+-   vulnerability of democracy
 
-<center>![](images/Bouk_bookcover.jpg)</center>
+-   empirical research: "look to the data"
+
+    -   historical demography project, University of Colorado - 1940 census
+
+    -   social science research, policy-making, problem-solving
+
+-   Data Humanism: reflecting on how human fallibility is embedded in our data
+
+::: notes
+-   democracy - vulnerable / historical irregularity
+
+-   Demographic Data - Values
+
+    -   Representation
+
+    -   Policy, Services, & Problem-Solving
+
+    -   Historical Value: Jeremy: historical demography project, University of Colorado - 1940 census
+
+-   Dangers
+
+    -   surveillance
+
+    -   tool of exploitation or oppression
+:::
+
+## Dan Bouk, *Democracy's Data (2022)* {.scrollable}
+
+<center>![](images/Bouk_bookcover.jpg){width="300"}</center>
 
 1940 Census: 131,669,275 total population
 
-::: {.incremental}
-
+::: incremental
 -   "There are stories in the data. You just have to know how to read them."
 
 -   "... must widen our lens to take in not only the numbers but also the processes that created those numbers."
-
 :::
 
 \-\--
 
 <!--Wernimont's book, p. 20 -->
 
-## Role of Data in a Democracy  {.scrollable}
+## Role of Data in a Democracy {.scrollable}
 
 <!--[relationship between data and democracy - why data is essential for a democracy]-->
 
 "As long as the people to be counted have a significant say in what matter and how the numbers will be used, then the census overflows with democratic potential. As long as the people control their own enumeration, then the quest to count each person is one of the purest expressions of democratic values." (Bouk 2022, 4)
 
-Our data also reflects the flaws in our democracy... if we read data as texts:
+Our data also reflects the flaws in our democracy... if we read **data as texts**:
 
 ::: incremental
--   have author(s) and reflect their interests & strengths, biases & flaws; also reflect the dominant culture and institution's values (and fears)
+-   texts that have author(s) and reflect their interests & strengths, biases & flaws; also reflect the dominant culture and institution's values (and fears)
 
--   result of debates: about what questions to ask, how, and of whom? and how to record the answers
+-   texts that result from debates: about what questions to ask, how, and of whom? and how to record the answers
 
--   belong to their time: reflect traditions and norms as well as shifts in those norms
+-   texts that belong to their time: reflect traditions and norms as well as shifts in those norms
 
--   don't just record facts but impose them; data makers decide what and who counts
+-   texts that don't just record facts but impose them; data makers decide what and who counts
 
--   live multiple lives
+-   texts that live multiple lives
 :::
 
 ::: notes
@@ -116,16 +146,6 @@ MRT "he who counts heads always silences facts and  voices." (124)
 :::
 
 ## What is being counted / quantified?
-
-::: {.incremental}
-
--   Counting People (censuses, demographic surveys)
-
--   Counting Votes (election data)
-
--   quantifying opinions and attitudes (surveys and polls)
-
-:::
 
 ## Counting People
 
@@ -169,7 +189,7 @@ MRT "he who counts heads always silences facts and  voices." (124)
 
     -   "paved the way for the use of modern statistical sampling methods and advanced computing machinery in government." (Bouk, 5-6)
 
-## 1940 Census
+## 1930 Census
 
 ![1930 Census Form](hidden-images/PaulMikecz_1930a.png){fig-align="center"}
 
@@ -220,7 +240,7 @@ we'll come back to the importance of this historical context...
 1950 Census - recently released: he was still there
 :::
 
-# From Census Collection to Census Data
+# From Census Collection to Census Data {.scrollable}
 
 ::: incremental
 -   **Original Census Forms**: home visit / arrival of census form in the mail
@@ -239,7 +259,6 @@ we'll come back to the importance of this historical context...
 :::
 
 ::: notes
-
 \[review Bouk!!\]
 :::
 
@@ -278,9 +297,9 @@ Influences:
 ::: notes
 Bouk:
 
--    "The census 'made' the facts that its columns defined. It hid the facts its columns denied."
+-   "The census 'made' the facts that its columns defined. It hid the facts its columns denied."
 
--    1920 census made  this clear: many Qs abt immigration led to immigration restriction
+-   1920 census made  this clear: many Qs abt immigration led to immigration restriction
 
 although 1900 census was first to inquire whether respondent was an immigrant, 1920 first time more detailed Qs were asked about the origins and languages spoken by immigrants.
 
@@ -308,13 +327,13 @@ Margaret Scattergod (Bouk Ch. 3)
 
 Negotiations: respondents choosing what to reveal and how to classify themselves; census takers choosing when to take them at their word (Bouk 234-5)
 
--    1x communists disguising their id
+-   1x communists disguising their id
 
--    Widows with pensions hid their incomes
+-   Widows with pensions hid their incomes
 
--    Ppl w/ unconventional hh's labored to explain themselves
+-   Ppl w/ unconventional hh's labored to explain themselves
 
--    Racism and sexism
+-   Racism and sexism
 
 -   
 :::
@@ -353,6 +372,36 @@ Negotiations: respondents choosing what to reveal and how to classify themselves
 ## Gerrymandering & Congressional Districts
 
 ## Mapping Opportunity
+
+# Data \@ Dartmouth
+
+## Counting People
+
+1.  Census Data / American Community Survey (ACS)
+    1.  recent (**Census API** / **tidycensus (R)**) \<\-- Workshop 2 / 3
+    2.  historical (**ICPSR**)
+2.  Original census forms & other genealogical records: Library's ***Ancestry*** account
+
+## Surveys & Polls
+
+1.  **Gallup Poll** dataset
+    1.  World
+    2.  U.S.
+    3.  Confidence in Institutions
+    4.  ??
+
+## Counting Votes
+
+1.  ??
+
+## The Press
+
+1.  Full texts from newspapers / magazines from **ProQuestTDM**
+2.  Full texts from newspapers + TV news transcripts: **Nexis Uni**
+
+## Judicial Records / Case Law
+
+1.  Westlaw, etc.??
 
 # 
 
