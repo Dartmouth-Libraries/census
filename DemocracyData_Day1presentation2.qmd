@@ -1,18 +1,26 @@
 ---
 title: "Democracy's Data"
 subtitle: "An Introduction to Essential Data for Democracy"
+title-slide-attributes: 
+  data-background-image: images/nyt2022_imageOnly.png
+  data-background-size: contain
+  data-background-opacity: "0.3"
+  
 author: "Jeremy Mikecz"
 institute: "Research Data Services, Dartmouth Libraries"
 date: "October 2024"
 format: 
   revealjs:
-    theme: sky
+    theme: night
     navigation-mode: vertical
+    chalkboard: true
 editor: visual
 logo: "images/logo_white.png"
 ---
 
-## Data & Democracy
+# Data & Democracy
+
+Conversation Starters:
 
 ::: incremental
 1.  What conditions does a society need for democracy to function effectively?
@@ -27,11 +35,37 @@ Timothy Snyder, Hannah Arendt
 The Big Lie
 :::
 
-# Democracy's Data
+## Flip Side
+
+What conditions cause democracies to fail / authoritarian governments to rise?
+
+-   Hannah Arendt, *The Origins of Totalitatianism* (1951)
+
+-   Timothy Snyder, *On Tyranny* (2017)
+
+# Democracy's Data Series
 
 What is the role of data in a democracy?
 
-**\[IMAGE: HEADLINES ABOUT DEMOCRACY\]**
+1.  A **History** of Data's Role in Democracy
+    1.  a long history of transforming people into data
+2.  **Uses & Abuses** of Data in Democracies
+3.  A **Data Humanism & Storytelling** Approach
+4.  **Exploring Essential Data** for Democracy (at Dartmouth & Beyond)
+
+## Value
+
+## Democracy's Data Workshop Series
+
+**Wed. 10/9: An Introduction to Essential Data for Democracy**
+
+Wed. 10/23 Counting People, Examining Census Data in R
+
+Wed. 10/30 Attitudes about Democracy and Elections - Working with Gallup Data in R
+
+## 
+
+# Why now?
 
 ::: notes
 Why
@@ -42,77 +76,152 @@ Why
 2.  empirical research "look to the data"
     1.  historical demography project, University of Colorado - 1940 census
     2.  social science research, policy-making, problem-solving
-3.  Bouk book
+3.  increasing ubiquity of data
+4.  Bouk book
 :::
 
-\-\--
+## Threats to democracy
 
-1.  Threats to democracy
+![](images/nyt2022_twinthreats2democracy.png)
+
+## Threats to democracy
+
+![Insurrection Attempt (Jan 6, 2021, U.S. Capitol)](images/Capitol_Riot_Jan6.jpg)
 
 ::: notes
 \[headlines about democracy\]
 
-\[photo of 1/6/21\]
-
 \[confidence in inst's\]
 :::
 
-\-\--
+## Empirical Social Science Research
 
-2.  Empirical Study of Demographic & Other Data
+"Look to the data"
+
+## Empirical Study of Demographic & Other Data
+
+![U.S. Domestic Migration, 1935 - 1940](images/topmetdests.png){alt="U.S. Domestic Migration, 1935 - 1940" width="800"}
 
 ::: notes
-\[U-Co study\]
-
 \[many other uses... census & other data\]
 :::
 
-\-\--
+## Ubiquity of Personal Data
 
-3.  Critical Data Science
+Bureaucratic data --\>
+
+Digital Data
+
+## The Human Costs of Data Collection
+
+![](images/bigdata_undergroundrailroad.png){fig-align="center"}
+
+## Critical Data Science
+
+![Safiya Noble, Algorithms of Oppression](images/Noble_AlgorithmsOfOppression.jpg){fig-align="left" width="200"}
+
+## Critical Data Science
+
+::: columns
+
+::: {.column}
+![Cathy O'Neill, Weapons of Math Destruction](images/O'Neil_WMD.jpg){alt="Cathy O'Neill, Weapons of Math Destruction" width="200"}
+:::
+
+::: {.column}
+how the incentives of data science undermine the humanity of its subjects, increases inequality, and threatens democracy
+:::
+:::
 
 ::: notes
+What does O'Neill mean by "data science"?
+
 \[O'Neill or similar books!\]
 :::
 
-\-\--
+## Critical Data Science / Demography
 
-<center>![](images/Bouk_bookcover.jpg){width="300"}</center>
-
-4.  Dan Bouk, *Democracy's Data* (2022)
+![Bouk, Democracy's Data (2022)](images/Bouk_bookcover.jpg){fig-align="center" width="300"}
 
 ::: notes
 :::
-
-## Democracy's Data Workshop Series
-
-Wed. 10/9: An Introduction to Essential Data for Democracy
-
-Wed. 10/23 Counting People, Examining Census Data in R
-
-Wed. 10/30 Attitudes about Democracy and Elections - Working with Gallup Data in R
-
-## Series Goals
-
-## Today's Goals
-
-1.  A History of Data's Role in Democracy
-    1.  Origins of Statistics, Data Visualization, and Data Science - Quantifying Humans - Their Lives, Deaths, Activities, Health, and Opinions
-2.  Uses & Abuses of Data in Democracies
-3.  A Data Humanism Approach
-4.  Essential Data for Democracy (at Dartmouth & Beyond)
 
 # History of Data's Role in Democracy
 
 ## \[Problems Of\]
 
-## Counting the Living / Counting the Dead
+## Counting the Living / Counting the Dead  {.smaller .scrollable}
 
-## The Rise of STAT-\*istics\*
+::: columns
 
-## U.S. Constitution
+::: {.column .incremental}
+-   17th - 19th centuries: British "bills of mortality"
+
+-   "transactional forms for counting human bodies, whether alive or dead, are at the heart of the modern reality that tables of numbers are poor vectors for the emotional and social impact of human mortality." (22)
+:::
+
+::: {.column}
+![Jacqueline Wernimont (Dartmouth - Digital Humanities and Social Engagement) *Numbered Lives* (2018)](images/wernimont.jpg){alt="Jacqueline Wernimont, Numbered Lives"}
+:::
+:::
+
+![](images/Gaunt_DreadfulVisitations_plague-highest-week-small.jpg){width="400"}
+
+## The Rise of *STAT*istics
+
+18th Century: Collection of information about the **State** / the "science of state"
+
+-   early focus: qualitative study of the State
+
+-   late 18th century: focus shifted to quantitative data about the state (i.e. population data)
+
+19th Century: origins of *mathematical statistics*
+
+::: notes
+or frame as the rise of:
+
+statistics
+
+data viz
+
+data science
+:::
+
+## U.S. Constitution, 1789  {.smaller}
+
+![](images/USConst_actual-enumeration.png)
+
+"<span style="color:blue">Representatives and direct Taxes shall be apportioned among the several States which
+may be included within this Union, according to their respective
+Numbers</span>, which shall be determined by adding to the whole Number of free
+Persons, including those bound to Service for a Term of Years, and
+excluding Indians not taxed, three fifths of all other Persons. <span style="color:red">The
+actual Enumeration shall be made within three Years after the first
+Meeting of the Congress of the United States, and within every
+subsequent Term of ten Years</span>, in such Manner as they shall by Law
+direct. The Number of Representatives shall not exceed one for every
+thirty Thousand, but each State shall have at Least one Representative; "
 
 ## Quantifying Deviance
+
+-   Governments: good at recording data about major life events (births, deaths) and moments where governments and people interacted (public health, crime, deviance)
+
+-   Statistics & Eugenics
+
+## Population Bomb?
+
+##  {.smaller .scrollable}
+
+::: columns
+
+::: {.column .incremental}
+-   mid-20th century concerns about global overpopulation
+:::
+
+::: column
+![Emily Klancher Merchant (former Neukom Fellow at Dartmouth), Building the Population Bomb (2021)](images/merchant.png){alt="Emily Klancher Merchant, Building the Population Bomb (2021)" fig-align="center"}
+:::
+:::
 
 ## Averaging / Sampling
 
@@ -149,6 +258,12 @@ https://www.census.gov/library/publications/2002/dec/pol_02-ma.html
 2.  1790 - 2010?: ICPSR
 3.  Social Explorer
 
+## Demographic Visualization Tools
+
+-   [Social Explorer](www.socialexplorer.com)
+
+-   \[The Opportunity Atlas\](
+
 ## Social Explorer
 
 ## Other Demographic Data
@@ -169,6 +284,8 @@ https://www.census.gov/library/publications/2002/dec/pol_02-ma.html
 full-text resources
 
 ## Social Media
+
+## Civic Participation
 
 ## Legislative Data
 
