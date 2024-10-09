@@ -41,13 +41,23 @@ What is the role of data in a democracy?
 
 ## Why now?
 
-## 
+![Insurrection Attempt (Jan 6, 2021, U.S. Capitol)](images/Capitol_Riot_Jan6.jpg){alt="Insurrection Attempt (Jan 6, 2021, U.S. Capitol)"}
+
+## Why now?
 
 ![](images/nyt2022_twinthreats2democracy.png)
 
-## Threats to democracy
+## Why now?
 
-![Insurrection Attempt (Jan 6, 2021, U.S. Capitol)](images/Capitol_Riot_Jan6.jpg){alt="Insurrection Attempt (Jan 6, 2021, U.S. Capitol)"}
+![](images/2024electionfears.png)
+
+## but also this...
+
+![](images/joyful_voters.png)
+
+## and this...
+
+![](images/democracy_holding-its-own.png)
 
 ## Democracy's Data Workshop Series
 
@@ -57,7 +67,7 @@ Wed. 10/23 Counting People, Examining Census Data in R
 
 Wed. 10/30 Attitudes about Democracy and Elections - Working with Gallup Data in R
 
-## Day 1: Introduction to Data & Democracy  {.smaller}
+## Day 1: Introduction to Data & Democracy {.smaller}
 
 ::: {.incremental .scrollable}
 -   Counting People
@@ -99,23 +109,22 @@ Wed. 10/30 Attitudes about Democracy and Elections - Working with Gallup Data in
 :::
 
 ::: column
-![Jacqueline Wernimont, Numbered Lives](images/wernimont.jpg){alt="Jacqueline Wernimont, Numbered Lives"}
+![Jacqueline Wernimont, Numbered Lives](images/wernimont.jpg)
 :::
 :::
 
 ![](images/Gaunt_DreadfulVisitations_plague-highest-week-small.jpg){width="400"}
 
-## Documenting the Dead @ Dartmouth
+## Documenting the Dead \@ Dartmouth
 
 -   Dewey Notebook: ["List of Deaths in the Vicinity of Dartmouth College"](https://collections.dartmouth.edu/teitexts/hanover-cemetery/diplomatic/dewey-journal-diplomatic.html)(1769 - 1859)
 
 -   William Worthington Dewey (1777-1861): farmer & antiquarian
 
-## The Rise of *STAT*istics  {.smaller}
+## The Rise of *STAT*istics {.smaller}
 
 ::: columns
-
-::: {.column}
+::: column
 18th Century: Collection of information about the **State** / the "science of state"
 
 -   early focus: qualitative study of the State
@@ -125,7 +134,7 @@ Wed. 10/30 Attitudes about Democracy and Elections - Working with Gallup Data in
 19th Century: origins of *mathematical statistics*
 :::
 
-::: {.column}
+::: column
 ![Wiggins and Jones. How Data Happened (2023)](images/Wiggins_HowDataHappened.jpg)
 :::
 :::
@@ -218,7 +227,7 @@ worked as a "Helper" in a Foundry
 
 ## 1930 Census
 
-![1930 Census](hidden-images/PaulMikecz_1930b.png){alt="1930 Census"}
+![1930 Census](hidden-images/PaulMikecz_1930b.png)
 
 ::: notes
 1930 census: here some cracks in the story begin to appear on paper. Here Paul's wife, my great-grandmother, is noted to not speak English, and they have 7 children, with all but the oldest and youngest - my grandfather - being girls. Also, under employment Paul is listed as unemployed with the code: 25 1a. Or is it 25-100?
@@ -234,7 +243,7 @@ worked as a "Helper" in a Foundry
 
 ## ??
 
-![Milwaukee County Asylum for Chronic Insane](hidden-images/PaulMikecz_1940b.png){alt="Milwaukee County Asylum for Chronic Insane" fig-align="center"}
+![Milwaukee County Asylum for Chronic Insane](hidden-images/PaulMikecz_1940b.png){fig-align="center"}
 
 ::: notes
 1940 Census: housed in the Milwaukee County Asylum for Chronic Insane
@@ -302,7 +311,7 @@ Negotiations: respondents choosing what to reveal and how to classify themselves
 
 ## Census Analysis
 
-![U.S. Domestic Migration, 1935 - 1940](images/topmetdests.png){alt="U.S. Domestic Migration, 1935 - 1940" width="800"}
+![U.S. Domestic Migration, 1935 - 1940](images/topmetdests.png){width="800"}
 
 \[many other uses... census & other data\]
 
@@ -319,21 +328,17 @@ Negotiations: respondents choosing what to reveal and how to classify themselves
 ::: notes
 DuBois Review:
 
-"In the Eleventh Census, Mr. Hoffman expresses great faith, and thinks it
-as reliable as any of the previous enumerations. There nevertheless
-exists in the minds of many scholars grave doubts as to the accuracy of a
-large part of this census, and a disposition to base few important
-conclusions on its results."
+"In the Eleventh Census, Mr. Hoffman expresses great faith, and thinks it as reliable as any of the previous enumerations. There nevertheless exists in the minds of many scholars grave doubts as to the accuracy of a large part of this census, and a disposition to base few important conclusions on its results."
 
 "most persons will at the outset be disposed to criticise the air of perfect conviction that pervades Mr. Hoffman's conclusions...."
 
 "**Mr. Hoffman has by no means avoided the many fallacies of the statistical method. This method is after all nothing but the application of logic to counting, and no amount of counting will justify a departure from the severe rules of correct reasoning."**
 
-1.   **Not contextualizing data with previous decades**
+1.  **Not contextualizing data with previous decades**
 
-2.   **Need to contextualize with proper comparisons**
+2.  **Need to contextualize with proper comparisons**
 
-3.   Accuses FH's analysis of being "unscientific"
+3.  Accuses FH's analysis of being "unscientific"
 
 The proper interpretation of **apparently contradictory social facts, is a matter requiring careful study and deep insight**
 
@@ -343,8 +348,7 @@ The proper interpretation of **apparently contradictory social facts, is a matte
 ## Kelly Miller
 
 ::: columns
-
-::: {.column}
+::: column
 mathematician
 
 1890 Census showed steep decline in African-American population
@@ -356,8 +360,7 @@ mathematician
 1947 study of 1940 census by Daniel Price: showed a 3% national undercount and a 13% undercount of the African-American population
 :::
 
-::: {.column}
-
+::: column
 ![](images/miller_kelly.jpg)
 :::
 :::
@@ -370,29 +373,33 @@ mathematician
 4.  Census data via Census API and [**tidycensus**](https://walker-data.com/tidycensus/articles/spatial-data.html)R package.
 
 ::: notes
-a.   Historical Data - ICPSR
+a.  Historical Data - ICPSR
 
-    i.  <https://www.icpsr.umich.edu>
+```         
+i.  <https://www.icpsr.umich.edu>
 
-    ii. Register for account thru inst.
+ii. Register for account thru inst.
 
-    iii. Search for U.S. Census
+iii. Search for U.S. Census
 
-    iv. 2896
+iv. 2896
 
-        1.  Examine variables
+    1.  Examine variables
+```
 
 b.  Full indiv count - 1940 - IPUMS?
 
-    i.   IPUMS USA - individual-level records 1850-1940 (or 1950?)
+    i.  IPUMS USA - individual-level records 1850-1940 (or 1950?)
 
-        1.  Data still being changed! - cleaning of data
+    ```         
+    1.  Data still being changed! - cleaning of data
 
-        2.  Click on restricted link - see desc. Of problems with 1950 data
+    2.  Click on restricted link - see desc. Of problems with 1950 data
 
-            a.  Restricted data - names and addresses
+        a.  Restricted data - names and addresses
 
-        3.  Select Data page
+    3.  Select Data page
+    ```
 
     ii. IPUMS Time Use
 
@@ -437,16 +444,20 @@ b.  Full indiv count - 1940 - IPUMS?
     3.  policy positions and alignments of political parties ([report](https://v-dem.net/documents/8/vparty_briefing.pdf))
 
 ::: notes
-1.   71% of global pop lives in auttocracies, up from 48% 10 yrs ago
+1.  71% of global pop lives in auttocracies, up from 48% 10 yrs ago
 
-2.   Israel falls out of lib dem for 1st time in 50 yrs
+2.  Israel falls out of lib dem for 1st time in 50 yrs
 :::
 
-# Back to the U.S. 
+# Back to the U.S.
 
 -   [Social Explorer](https://www.socialexplorer.com)
 
+    -   What questions do you have about NH's population? See if you can answer those questions using Social Explorer
+
 -   [Opportunity Atlas](https://www.opportunityatlas.org/)
+
+    -   Look up the neighborhood you grew up in. Did you grow up in a place with upward mobility?
 
 ::: notes
 explore some Q abt NH?
