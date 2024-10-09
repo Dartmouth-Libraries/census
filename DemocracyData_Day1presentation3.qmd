@@ -1,0 +1,229 @@
+---
+title: "Democracy's Data"
+subtitle: "An Introduction to Essential Data for Democracy"
+title-slide-attributes: 
+  data-background-image: images/nyt2022_imageOnly.png
+  data-background-size: contain
+  data-background-opacity: "0.3"
+  
+author: "Jeremy Mikecz"
+institute: "Research Data Services, Dartmouth Libraries"
+date: "October 2024"
+format: 
+  revealjs:
+    theme: night
+    navigation-mode: vertical
+    chalkboard: true
+editor: visual
+logo: "images/logo_white.png"
+---
+
+# Data & Democracy
+
+Conversation Starters:
+
+::: incremental
+1.  What conditions does a society need for democracy to function effectively?
+2.  How can we measure or quantify the presence of these conditions?
+:::
+
+::: notes
+counter question - What conditions allow the rise of authoritarian leaders & governments?
+
+Timothy Snyder, Hannah Arendt
+
+The Big Lie
+:::
+
+# Democracy's Data Series
+
+What is the role of data in a democracy?
+
+## Democracy's Data Workshop Series
+
+**Wed. 10/9: An Introduction to Essential Data for Democracy**
+
+Wed. 10/23 Counting People, Examining Census Data in R
+
+Wed. 10/30 Attitudes about Democracy and Elections - Working with Gallup Data in R
+
+## Day 1: Introduction to Data & Democracy
+
+::: {.incremental .scrollable}
+-   Counting People
+
+    -   but telling human stories
+
+    -   the U.S. census
+
+    -   population surveys & samples
+
+-   Quantifying Opinions & Beliefs: Polls and surveys
+
+-   Narratives & Rhetoric
+
+    -   The Press
+
+    -   Social Media
+
+-   Tracking Government
+
+-   Global Indices of Democracy
+:::
+
+# Counting People
+
+-   earliest forms of writing: count & record livestock & commodities
+
+-   early governments: counting people for the purpose of taxation
+
+    -   documentation allowed the accumulation of wealth (i.e. by state, royalty, religious institutions)
+
+## Counting the Dead {.smaller .scrollable}
+
+::: columns
+::: {.column .incremental}
+-   17th - 19th centuries: British "bills of mortality"
+
+-   "transactional forms for counting human bodies, whether alive or dead, are at the heart of the modern reality that tables of numbers are poor vectors for the emotional and social impact of human mortality." (22)
+:::
+
+::: column
+![Jacqueline Wernimont, Numbered Lives](images/wernimont.jpg){alt="Jacqueline Wernimont, Numbered Lives"}
+:::
+:::
+
+![](images/Gaunt_DreadfulVisitations_plague-highest-week-small.jpg){width="400"}
+
+## Documenting the Dead @ Dartmouth
+
+-   Dewey Notebook: ["List of Deaths in the Vicinity of Dartmouth College"](https://collections.dartmouth.edu/teitexts/hanover-cemetery/diplomatic/dewey-journal-diplomatic.html)(1769 - 1859)
+
+-   William Worthington Dewey (1777-1861): farmer & antiquarian
+
+## The Rise of *STAT*istics
+
+::: columns
+
+::: {.column}
+18th Century: Collection of information about the **State** / the "science of state"
+
+-   early focus: qualitative study of the State
+
+-   late 18th century: focus shifted to quantitative data about the state (i.e. population data)
+
+19th Century: origins of *mathematical statistics*
+:::
+
+::: {.column}
+![Wiggins and Jones. How Data Happened (2023)](images/Wiggins_HowDataHappened.jpg)
+:::
+:::
+
+::: notes
+or frame as the rise of:
+
+statistics
+
+data viz
+
+data science
+:::
+
+## U.S. Constitution, 1789 {.smaller}
+
+![](images/USConst_actual-enumeration.png)
+
+"[Representatives and direct Taxes shall be apportioned among the several States which may be included within this Union, according to their respective Numbers]{style="color:blue"}, which shall be determined by adding to the whole Number of free Persons, including those bound to Service for a Term of Years, and excluding Indians not taxed, three fifths of all other Persons. [The actual Enumeration shall be made within three Years after the first Meeting of the Congress of the United States, and within every subsequent Term of ten Years]{style="color:red"}, in such Manner as they shall by Law direct. The Number of Representatives shall not exceed one for every thirty Thousand, but each State shall have at Least one Representative..."
+
+# The United States Decennial Census (1790-2020)
+
+[2020 U.S. Census Questionnaire](https://www2.census.gov/programs-surveys/decennial/2020/technical-documentation/questionnaires-and-instructions/questionnaires/2020-informational-questionnaire-english_DI-Q1.pdf)
+
+-   What aspects of your life and identity are elided by these questions?
+
+::: notes
+Problems of fitting human lives into data tables (like deaths)
+
+\[1790 census - full count\]
+:::
+
+## Data Humanism and the Census
+
+![](images/datahumanism.jpg){fig-align="center"}
+
+Giorgia Lupi, "[Data Humanism](http://giorgialupi.com/data-humanism-my-manifesto-for-a-new-data-wold)."
+
+::: notes
+Lupi calls on us - among other things - to:
+
+see the imperfections and subjective nature of data collection & analysis
+
+encourages us to embrace rather than simplify complexity
+
+recognize that data is not just numbers but people
+
+and that data can make us not just more efficient, but more human
+
+(how?)
+:::
+
+## Dan Bouk, *Democracy's Data (2022)*
+
+<center>![](images/Bouk_bookcover.jpg){height="600"}</center>
+
+-   focus on 1940 census - released in 2012
+
+    -   most recent census to be released (with full individual-level data) until 2022 (1950 Census)
+
+-   encourages us to start at the individual, human level (of the respondent, census taker, census designer, policy maker, etc.)
+
+    ::: notes
+    save for later:
+
+    -   "paved the way for the use of modern statistical sampling methods and advanced computing machinery in government." (Bouk, 5-6)
+    :::
+
+## Data is / are People
+
+1.  Look up your ancestors (Dartmouth Library databases --\> "Ancestry.com")
+
+A Family Mystery: "Don't ask about him again"
+
+## 1910 Census
+
+## Data is / are Texts
+
+Our data also reflects the flaws in our democracy... if we read **data as texts**:
+
+::: incremental
+-   texts that have author(s) and reflect their interests & strengths, biases & flaws; also reflect the dominant culture and institution's values (and fears)
+
+-   texts that result from debates: about what questions to ask, how, and of whom? and how to record the answers
+
+-   texts that belong to their time: reflect traditions and norms as well as shifts in those norms
+
+-   texts that don't just record facts but impose them; data makers decide what and who counts
+
+-   texts that live multiple lives
+:::
+
+::: notes
+**multiple lives**:
+
+Haitian American scholar Michel-Rolph Trouillot: 4 places where silence enters the archive
+
+\[apply to data?\]
+
+MRT "he who counts heads always silences facts and  voices." (124)
+:::
+
+## Census Questions
+
+## Role of Data in a Democracy {.scrollable}
+
+<!--[relationship between data and democracy - why data is essential for a democracy]-->
+
+"As long as the people to be counted have a significant say in what matter and how the numbers will be used, then the census overflows with democratic potential. As long as the people control their own enumeration, then the quest to count each person is one of the purest expressions of democratic values." (Bouk 2022, 4)
+
+# Reflections
