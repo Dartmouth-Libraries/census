@@ -39,6 +39,16 @@ The Big Lie
 
 What is the role of data in a democracy?
 
+## Why now?
+
+## 
+
+![](images/nyt2022_twinthreats2democracy.png)
+
+## Threats to democracy
+
+![Insurrection Attempt (Jan 6, 2021, U.S. Capitol)](images/Capitol_Riot_Jan6.jpg){alt="Insurrection Attempt (Jan 6, 2021, U.S. Capitol)"}
+
 ## Democracy's Data Workshop Series
 
 **Wed. 10/9: An Introduction to Essential Data for Democracy**
@@ -47,14 +57,14 @@ Wed. 10/23 Counting People, Examining Census Data in R
 
 Wed. 10/30 Attitudes about Democracy and Elections - Working with Gallup Data in R
 
-## Day 1: Introduction to Data & Democracy
+## Day 1: Introduction to Data & Democracy  {.smaller}
 
 ::: {.incremental .scrollable}
 -   Counting People
 
-    -   but telling human stories
-
     -   the U.S. census
+
+    -   but telling human stories
 
     -   population surveys & samples
 
@@ -101,7 +111,7 @@ Wed. 10/30 Attitudes about Democracy and Elections - Working with Gallup Data in
 
 -   William Worthington Dewey (1777-1861): farmer & antiquarian
 
-## The Rise of *STAT*istics
+## The Rise of *STAT*istics  {.smaller}
 
 ::: columns
 
@@ -170,15 +180,15 @@ and that data can make us not just more efficient, but more human
 
 ## Dan Bouk, *Democracy's Data (2022)*
 
-<center>![](images/Bouk_bookcover.jpg){height="600"}</center>
+<center>![](images/Bouk_bookcover.jpg){width="450" height="507"}</center>
 
--   focus on 1940 census - released in 2012
+-   ::: notes
+    -   focus on 1940 census - released in 2012
 
-    -   most recent census to be released (with full individual-level data) until 2022 (1950 Census)
+        -   most recent census to be released (with full individual-level data) until 2022 (1950 Census)
 
--   encourages us to start at the individual, human level (of the respondent, census taker, census designer, policy maker, etc.)
+    -   encourages us to start at the individual, human level (of the respondent, census taker, census designer, policy maker, etc.)
 
-    ::: notes
     save for later:
 
     -   "paved the way for the use of modern statistical sampling methods and advanced computing machinery in government." (Bouk, 5-6)
@@ -191,6 +201,50 @@ and that data can make us not just more efficient, but more human
 A Family Mystery: "Don't ask about him again"
 
 ## 1910 Census
+
+![](images/PaulMikecz_1910.png)
+
+::: notes
+28 year old - living at a boarding houses with 26 other immigrants from "Austria"
+
+worked as a "Helper" in a Foundry
+:::
+
+## 1920 Census
+
+::: notes
+1920 census: wife and most of rest of family has rejoined them - although 2 teenage daughters were left behind in Croatia - and my grandfather was not yet born
+:::
+
+## 1930 Census
+
+![1930 Census](hidden-images/PaulMikecz_1930b.png){alt="1930 Census"}
+
+::: notes
+1930 census: here some cracks in the story begin to appear on paper. Here Paul's wife, my great-grandmother, is noted to not speak English, and they have 7 children, with all but the oldest and youngest - my grandfather - being girls. Also, under employment Paul is listed as unemployed with the code: 25 1a. Or is it 25-100?
+:::
+
+## 1940 Census
+
+![](hidden-images/PaulMikecz_1940a.png){fig-align="center"}
+
+::: notes
+1940 Census: Paul is listed alone and living in a group home. In some way, he had come full circle from the 1910 census when he lived in a boarding house as a recently-arrived immigrant and day laborer. But, What;s going on now in 1940?
+:::
+
+## ??
+
+![Milwaukee County Asylum for Chronic Insane](hidden-images/PaulMikecz_1940b.png){alt="Milwaukee County Asylum for Chronic Insane" fig-align="center"}
+
+::: notes
+1940 Census: housed in the Milwaukee County Asylum for Chronic Insane
+
+historical context - how and why people were institutionalized compared to today
+
+we'll come back to the importance of this historical context...
+
+1950 Census - recently released: he was still there
+:::
 
 ## Data is / are Texts
 
@@ -218,12 +272,194 @@ Haitian American scholar Michel-Rolph Trouillot: 4 places where silence enters t
 MRT "he who counts heads always silences facts and  voices." (124)
 :::
 
+## Other "Doorstep" Encounters
+
+Negotiations: respondents choosing what to reveal and how to classify themselves; census takers choosing when to take them at their word (Bouk 234-5)
+
+::: notes
+-   1x communists disguising their id
+
+-   Widows with pensions hid their incomes
+
+-   Ppl w/ unconventional hh's labored to explain themselves
+
+-   Racism and sexism
+:::
+
 ## Census Questions
 
-## Role of Data in a Democracy {.scrollable}
+## 1930 Census
+
+![](hidden-images/PaulMikecz_1930b.png){fig-align="center"}
+
+1930 Census:
+
+-   asked about **unemployment** and had a long schedule for identifying different types of unemployment (unfortunately key to codes now lost)
+
+-   also first to ask whether a person was a **war veteran**. Likely concern about WWI veterans
+
+-   also asked whether a person owned a **radio**
+
+## Census Analysis
+
+![U.S. Domestic Migration, 1935 - 1940](images/topmetdests.png){alt="U.S. Domestic Migration, 1935 - 1940" width="800"}
+
+\[many other uses... census & other data\]
+
+## Census Study Gone Wrong
+
+-   1840 Census: analysis lumped together Black Americans with the White "insane and idiots"
+
+-   Hoffman, *Race Traits and Tendencies* (1896)
+
+    -   key source: 1890 Census
+
+    -   
+
+::: notes
+DuBois Review:
+
+"In the Eleventh Census, Mr. Hoffman expresses great faith, and thinks it
+as reliable as any of the previous enumerations. There nevertheless
+exists in the minds of many scholars grave doubts as to the accuracy of a
+large part of this census, and a disposition to base few important
+conclusions on its results."
+
+"most persons will at the outset be disposed to criticise the air of perfect conviction that pervades Mr. Hoffman's conclusions...."
+
+"**Mr. Hoffman has by no means avoided the many fallacies of the statistical method. This method is after all nothing but the application of logic to counting, and no amount of counting will justify a departure from the severe rules of correct reasoning."**
+
+1.   **Not contextualizing data with previous decades**
+
+2.   **Need to contextualize with proper comparisons**
+
+3.   Accuses FH's analysis of being "unscientific"
+
+The proper interpretation of **apparently contradictory social facts, is a matter requiring careful study and deep insight**
+
+**Mr. Hoffman has committed the unpardonable sin of publishing a book of 329 pages without an index.**
+:::
+
+## Kelly Miller
+
+::: columns
+
+::: {.column}
+mathematician
+
+1890 Census showed steep decline in African-American population
+
+-   Hoffman blamed Black degeneracy
+
+-   Miller: blamed a census undercount in 1890 (and subsequent decades)
+
+1947 study of 1940 census by Daniel Price: showed a 3% national undercount and a 13% undercount of the African-American population
+:::
+
+::: {.column}
+
+![](images/miller_kelly.jpg)
+:::
+:::
+
+## Acquiring Census Data
+
+1.  original forms - ancestry.com
+2.  Historical Census Data (State & County level): \[ICPSR\](<https://www.icpsr.umich.edu>) (especially dataset #2896).
+3.  Full Individual Count Data: [IPUMS](https://www.ipums.org/)
+4.  Census data via Census API and [**tidycensus**](https://walker-data.com/tidycensus/articles/spatial-data.html)R package.
+
+::: notes
+a.   Historical Data - ICPSR
+
+    i.  <https://www.icpsr.umich.edu>
+
+    ii. Register for account thru inst.
+
+    iii. Search for U.S. Census
+
+    iv. 2896
+
+        1.  Examine variables
+
+b.  Full indiv count - 1940 - IPUMS?
+
+    i.   IPUMS USA - individual-level records 1850-1940 (or 1950?)
+
+        1.  Data still being changed! - cleaning of data
+
+        2.  Click on restricted link - see desc. Of problems with 1950 data
+
+            a.  Restricted data - names and addresses
+
+        3.  Select Data page
+
+    ii. IPUMS Time Use
+
+        1.  Select Data \--\> Activity Coding Structure
+
+        2.  Can register for an account
+
+        3.  ATUS - questionnaire: <https://www.atusdata.org/atus/resources/linked_docs/tuquestionnaire23.pdf>
+:::
+
+## Population Surveys
+
+## Role of the Census and Other Data in a Democracy {.scrollable}
 
 <!--[relationship between data and democracy - why data is essential for a democracy]-->
 
 "As long as the people to be counted have a significant say in what matter and how the numbers will be used, then the census overflows with democratic potential. As long as the people control their own enumeration, then the quest to count each person is one of the purest expressions of democratic values." (Bouk 2022, 4)
 
+# Quantifying Opinions & Attitudes
+
+[Gallup Poll dataset](https://researchguides.dartmouth.edu/c.php?g=59725&p=9826959)
+
+# Narratives & Rhetoric
+
+1.  [ProQuest TDM](https://tdmstudio.proquest.com/home) full-text newspaper and other sources
+2.  Nexis Uni: TV News transcripts
+3.  social media
+
+# Tracking Our Government
+
+1.  Election Data\[\^res1\]
+2.  Legislation\[\^res1\]
+3.  Court Cases\[\^res1\]
+
+\[\^res1\]: [CQ Press](https://cqpress-sagepub-com.dartmouth.idm.oclc.org/)
+
+# Tracking Governments around the World
+
+1.  Varieties of Democracy [**VDEM**](https://v-dem.net/)
+    1.  quantifying levels of democracy in countries ([report](https://v-dem.net/documents/44/v-dem_dr2024_highres.pdf))
+    2.  tracking trends in democratization or autocratization
+    3.  policy positions and alignments of political parties ([report](https://v-dem.net/documents/8/vparty_briefing.pdf))
+
+::: notes
+1.   71% of global pop lives in auttocracies, up from 48% 10 yrs ago
+
+2.   Israel falls out of lib dem for 1st time in 50 yrs
+:::
+
+# Back to the U.S. 
+
+-   [Social Explorer](https://www.socialexplorer.com)
+
+-   [Opportunity Atlas](https://www.opportunityatlas.org/)
+
+::: notes
+explore some Q abt NH?
+
+aging? diversifying?
+
+Opp Atlas - upward mobility?
+:::
+
 # Reflections
+
+"Data never speaks for itself" (Bouk, 124)
+
+-   always look for silences
+
+-   "He who counts heads always silences facts and voices." (Michel-Rolph Trouillot)
