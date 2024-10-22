@@ -7,7 +7,7 @@ editor: visual
 
 # Working with Census Data in R
 
-## Using the *tidycensus* library
+## Using the tidycensus library
 
 #### Jeremy Mikecz Research Data Services Dartmouth Libraries
 
@@ -17,7 +17,7 @@ In this notebook, we will experiment with importing U.S. Census using the tidyce
 
 By the end of the lesson, we will:
 
--   understand how to access recent data using R, the Census API, and the *tidycensus* library
+-   understand how to access recent data using R, the Census API, and the tidycensus library
 
 -   import, wrangle, and analyze / visualize census data using these tools
 
@@ -28,6 +28,23 @@ By the end of the lesson, we will:
 1.  To what extent is New Hampshire's population aging?
 2.  ??
 3.  ??
+
+## Overview
+
+There are several ways to acquire digitized census data. Most data scientists will choose between one of the following options:
+
+1.  **download aggregated census data from a data repository and then import** this data into R or a data analysis platform of your choosing. One recommended data repository is ICPSR. We recommend taking a look at ICPSR dataset #2896, which includes census data for every decennial census from 1790 to 2000 at the geographic level of the county or state.
+2.  **Batch download census data** from the \[US Census Bureau's FTP site\](https://walker-data.com/census-r/the-united-states-census-and-the-r-programming-language.html) and then import into R or a data analysis platform of your choosing.
+3.  **Download U.S. Census microdata (individual-level) data from IPUMS.** *\[add description\]*
+4.  **Import census data** directly into R (or another platform) using one of the [U.S. Census Bureau's APIs](https://www.census.gov/data/developers/data-sets.html).
+5.  **Use a third-party programming library to ease and facilitate the importation of data using the Census APIs.** For R, we can use the **tidycensus** library, which allows us to access aggregated and micro- census data.
+6.  \[NHGIS, see Ch. 3.4 and 11\]
+
+In this lesson, we will follow method #5 above. For more documentation and tutorials for working with this library, see the following (created by the library's creator):
+
+-   Kyle Walker and Matt Herman, "[tidycensus](https://walker-data.com/tidycensus/index.html)".
+
+-   Kyle Walker, [**Analyzing US Census Data: Methods, Maps, and Models in R**](https://walker-data.com/census-r/index.html). CRC Press **(2023).**
 
 ## 1. Setup
 
@@ -97,13 +114,13 @@ First, however, let's explore what data is accessible using tidycensus:
 1.  U.S. Decennial Census Data - full-count data recorded every 10 years since 1790.
 
     ```         
-    "sf1": 2000 and 2010
+    Summary Files 1 and 2 ("sf1" and "sf2"): 2000 and 2010
 
-    "sf2": 2000 and 2010
+    Summary Files 3 and 4 ("sf3" and "sf4"): 2000 only
 
-    "sf3" and "sf4": 2000 only
+    Demographic Profile ("dp"): 2020 only
 
-    "dp": 2020 only
+    Demographic and Housing Characteristics File ("dhc"): 2020 only
 
     "pl" - redistricting files: 2000, 2010, 2020 (for 1990: message: "we recommend using NHGIS and the ipumsr R package.")
     ```
@@ -115,8 +132,287 @@ First, however, let's explore what data is accessible using tidycensus:
 1-year ACS ("acs1")
 ```
 
-### 2b. Geographic Units / Scales
+### 2b. Variables
+
+When distributed to residents, census forms typically ask around two dozen questions (although the nature and number of these questions has changed over time). Yet, in processing the results of this survey, the U.S. Census generates thousands of data variables, aggregated at various geographic units (see the next section for more on geography). You can ask tidycensus to return a list of these variables for each census year:
+
+```{r}
+vars2020 <- load_variables(2020, "pl", cache=TRUE)
+view(vars2020)
+
+```
+
+Note: most of these data fields are compiled from multiple other data fields (i.e. the count of the number of people who identified their race as a combination of Black and American Indian) or cross-tabulations (i.e. number of Asian-American residents 18 and over). However, if we look at the **concept** column, we see the "pl" dataset covers the following main categories:
+
+-   Occupancy Status
+
+-   Race
+
+-   Hispanic / Non-Hispanic identity
+
+-   Group Quarters Population
+
+To learn more about tidycensus' load_variables functions, you can place a "?" before the function name.
+
+`{r} ?load_variables}`
+
+Now, let's examine the American Community Survey data (but let's also output the results to allow closer review):
+
+```{r}
+vars2020acs <- load_variables(2020, "acs5", cache=TRUE)
+view(vars2020acs)
+
+write.csv(vars2020acs, "acs5_2020_variables.csv", row.names=FALSE)
+```
+
+This dataset contains nearly 30,000 variables! To better review all the data available we can:
+
+1.  output the list of unique data "concepts"
+2.  return all variables for a given concept.
+
+```{r}
+uniq_concepts <- unique(vars2020acs$concept)
+
+```
+
+Still a long list! But, more doable.
+
+```{r}
+print(class(vars2020acs))
+
+
+```
+
+```{r}
+vars2020acs %>%
+  filter(concept == "PLACE OF BIRTH FOR THE FOREIGN-BORN POPULATION IN THE UNITED STATES")
+
+```
+
+::: callout-note
+### Exercise
+
+In the cell below, let's examine the types of data stored in the other datasets.
+:::
+
+```{r}
+vars2020dhc <- load_variables(2020, "dhc", cache=TRUE)
+view(vars2020dhc)
+
+```
+
+::: callout-note
+### Exercise
+
+Create a new code cell below. Then, identify:
+
+1.  a variable or set of variables you would like to analyze
+2.  a research question you could answer by analyzing these data variables
+:::
+
+Interesting variables:
+
+-   "B24114_064" = Estimate!!Total:!!Computer and information research scientists
+
+-   
+
+    |  |  |  |  |  |
+    |----|----|----|----|----|
+    |  | B07009_025 | Estimate!!Total:!!Moved from different state: | GEOGRAPHICAL MOBILITY IN THE PAST YEAR BY EDUCATIONAL ATTAINMENT FOR CURRENT RESIDENCE IN THE UNITED STATES | tract |
+    | **122** | B07009_026 | Estimate!!Total:!!Moved from different state:!!Less than high school graduate | GEOGRAPHICAL MOBILITY IN THE PAST YEAR BY EDUCATIONAL ATTAINMENT FOR CURRENT RESIDENCE IN THE UNITED STATES | tract |
+    | **123** | B07009_027 | Estimate!!Total:!!Moved from different state:!!High school graduate (includes equivalency) | GEOGRAPHICAL MOBILITY IN THE PAST YEAR BY EDUCATIONAL ATTAINMENT FOR CURRENT RESIDENCE IN THE UNITED STATES | tract |
+    | **124** | B07009_028 | Estimate!!Total:!!Moved from different state:!!Some college or associate's degree | GEOGRAPHICAL MOBILITY IN THE PAST YEAR BY EDUCATIONAL ATTAINMENT FOR CURRENT RESIDENCE IN THE UNITED STATES | tract |
+    | **125** | B07009_029 | Estimate!!Total:!!Moved from different state:!!Bachelor's degree | GEOGRAPHICAL MOBILITY IN THE PAST YEAR BY EDUCATIONAL ATTAINMENT FOR CURRENT RESIDENCE IN THE UNITED STATES | tract |
+    | **126** | B07009_030 | Estimate!!Total:!!Moved from different state:!!Graduate or professional degree | GEOGRAPHICAL MOBILITY IN THE PAST YEAR BY EDUCATIONAL ATTAINMENT FOR CURRENT RESIDENCE IN THE UNITED STATES | tract |
+
+-   
+
+    |     |     |
+    |-----|-----|
+    |     |     |
+
+```{r}
+
+```
+
+### 2c. Geographic Units / Scales
 
 Through tidycensus, we may request decennial census and ACS data at a variety of geographic levels, from the level of the country, region, and state down to the level of census tracts and blocks. Also includes various alternative geographic categories from Native American reservations to congressional districts, zip code areas, and school districts.
 
 See the [Geography in tidycensus table](https://walker-data.com/tidycensus/articles/basic-usage.html#geography-in-tidycensus) in the package's documentation for a useful overview of these different geographies.
+
+``` r
+```
+
+```{r}
+NH_congdists <- get_decennial(geography = "congressional district", 
+                         state = "NH", 
+                         variables = c("P5_002N"),
+                         year = 2020)
+head(NH_congdists)
+```
+
+::: callout-note
+### Exercise
+
+Copy the above cell below. Then try tweaking this code by changing the state or geography level of your request data. If you receive any errors, consult the link above this code cell.
+:::
+
+### 2d. Identifying unique values with Distinct
+
+To quickly view the types of geography available for a dataset, you can use the **dplyr** function **distinct** (dyplyr is part of the tidyverse).
+
+```{r}
+vars2020acs %>%
+  distinct(geography)
+```
+
+*\[note - how is geography stored in decennial data??\]*
+
+::: callout-note
+### Exercise
+
+Now, let's try answering the research question you identified in the previous exercise.
+
+Using the ACS dataset and the **get_acs** function, import the data you need to answer that question.
+:::
+
+```{r}
+data_scientists <- get_acs(geography = "us",
+                           variables = c("B24114_064"),
+                           year = 2020)
+```
+
+## 3. Case Study: Median Age
+
+Question: Does NH have the oldest population in the country?
+
+```{r}
+med_age <- get_acs(geography = "state",
+        variables = c("B01002_001"),
+        year = 2020)
+```
+
+### 3b. Sorting with Arrange
+
+```{r}
+med_age %>%
+  arrange(desc(estimate))
+```
+
+We can sort this data using the data viewer in R Studio or...
+
+using the **arrange** function:
+
+```{r}
+med_age %>%
+  arrange(desc(estimate))
+```
+
+## 4. Mapping Results
+
+## 5. Race
+
+Is NH the whitest state in the country?
+
+```{r}
+get_decennial(
+  geography = "state",
+  year = 2020,
+  variables = c(total = "P1_001N", 
+                white = "P1_003N",
+                black = "P1_004N",
+                AINA = "P1_005N",
+                Asian = "P1_006N",
+                PI = "P1_007N",
+                other = "P1_008N",
+                two_races = "P1_009N")
+)
+
+
+```
+
+### 5b. Creating New Variables with Mutate
+
+### 5c. Subsetting with Select
+
+## 6. Case Study??
+
+### 6b. Split-Apply-Combine
+
+\[Ch. 3\]
+
+### 6c. Time-Series Analysis
+
+## 7. Visualizations
+
+### 7a. Histograms
+
+### 7b. Dot plots
+
+see esp. 6.6.2
+
+### 7c. Scatterplots
+
+### 7d. Line Plots with Time Series Data
+
+### Bee Swarm Plots
+
+## 3b. Case Study: Education & Earnings by Census Tract
+
+Let's experiment with a case study: an exploration of the relationship between education level and income earnings by census tract.
+
+```{r}
+keep_vars <- vars2020acs %>%
+  filter(concept == "MEDIAN EARNINGS IN THE PAST 12 MONTHS (IN 2020 INFLATION-ADJUSTED DOLLARS) BY SEX BY EDUCATIONAL ATTAINMENT FOR THE POPULATION 25 YEARS AND OVER")
+```
+
+Note: all the variables under the above concept begin with "B20004". We can request all these variables as a group using the argument "table".
+
+```{r}
+keep_vars_list <- as.list(keep_vars$name)
+```
+
+```{r}
+nh_educ_earn <- get_acs(geography = "tract",
+        state = "NH",
+        table = "B20004",
+        survey = "acs5",
+        year = 2020)
+
+```
+
+### Map variable names to variable labels
+
+```{r}
+nh_educ_earn <- get_acs(geography = "tract",
+        state = "NH",
+        survey = "acs5",
+        year = 2020,
+        variables = c(total = "B20004_001",
+                      male_total = "B20004_007",
+                      female_total = "B20004_013",
+                      less_hs = "B20004_002",
+                      hs = "B20004_003",
+                      some_coll = "B20004_004",
+                      bach = "B20004_005",
+                      grad = "B20004_006", 
+                      m_less_hs = "B20004_008",
+                      m_hs = "B20004_009",
+                      m_some_coll = "B20004_010",
+                      m_bach = "B20004_011",
+                      m_grad = "B20004_012", 
+                      f_less_hs = "B20004_014",
+                      f_hs = "B20004_015",
+                      f_some_coll = "B20004_016",
+                      f_bach = "B20004_017",
+                      f_grad = "B20004_018" 
+                      )
+        )
+```
+
+Question: What county has the highest proportion of people with graduate degrees
+
+```{r}
+nh_grads
+```

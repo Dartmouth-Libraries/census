@@ -1,0 +1,209 @@
+---
+title: "Congressional Districts"
+format: html
+editor: visual
+---
+
+## Congressional District Data
+
+## Notes - from previous email
+
+I believe the Census API  allows retrieval of demographic info by congressional district for the years 2000, 2010, and 2020. The ACS API has a lot more variables to look at (but obviously its an estimate rather than a full count).
+
+What types of breakdowns would you want besides 18 and up? 
+
+Race? Sex? Others? race x age?  race x sex ? etc.
+
+I don't believe either the Census or ACS has numbers for registered voters. But, there may be other ways to get this, possibly through the Current Population Survey: <https://www.census.gov/programs-surveys/cps.html> (just found this, haven't had time to explore it yet).
+
+```{r}
+packrat::on()
+
+readRenviron("../.Renviron")
+Sys.getenv("CENSUS_API_KEY")  
+
+```
+
+```{r}
+#INSTALL PACKAGES - only needed the first time you use this package
+#install.packages("tidyverse") 
+#install.packages("tidycensus")  
+
+# LOAD THEM
+library(tidyverse) 
+library(tidycensus) 
+
+```
+
+```{r}
+vars2020 <- load_variables(2020, "pl", cache=TRUE)
+#2022 - most recent acs5 dataset
+vars2020acs <- load_variables(2020, "acs5", cache=TRUE)
+
+#view(vars2020)
+```
+
+```{r}
+NH_cds_race <- get_acs(geography = "congressional district",
+                             state="NH",
+                             table = "B02001",
+                             year = 2022)
+
+NH_cds_hisp <- get_acs(geography = "congressional district",
+                             state="NH",
+                             variables=c("B03001_001", "B03001_002", 
+                                         "B03001_003"),
+                             year = 2022)
+
+NH_cds_sex <- get_acs(geography = "congressional district",
+                             state="NH",
+                             variables=c("B01001_001", "B01001_002", 
+                                         "B01001A_017"),
+                             year = 2022)
+
+
+```
+
+```{r}
+
+#race 18+
+#Black 18+:
+
+NH_cds_total18 <- get_acs(geography = "congressional district",
+                             state="NH",
+                             table = "B01001",
+                             year = 2020)
+
+ 
+NH_cds_black18 <- get_acs(geography = "congressional district",
+                             state="NH",
+                             table = "B01001B",
+                             year = 2020)
+
+NH_cds_hisp18 <- get_acs(geography = "congressional district",
+                             state="NH",
+                             table="B01001I",
+                             year = 2020)
+
+NH_cds_sex18 <- get_acs(geography = "congressional district",
+                             state="NH",
+                             variables=c("B05003_019", "B05003_008"),
+                             year = 2020)
+
+NH_acs_cds_educ18 <- get_acs(geography = "congressional district",
+                             state="NH",
+                             table="B07009",
+                             year = 2020)
+
+```
+
+## Education
+
+```{r}
+ #extract last 3 numbers of variable and convert to integer
+NH_acs_cds_educ18 <-NH_acs_cds_educ18 %>%
+  mutate(groupnum = as.numeric(str_sub(variable, -3, -1))) %>%
+  filter(between(groupnum, 0, 6), estimate > 0)
+  
+```
+
+```{r}
+NH_acs_cds_educ18 <- NH_acs_cds_educ18 %>%
+  mutate(variable=replace(variable, variable=="B07009_001", "educ_total"),
+         variable=replace(variable, variable=="B07009_002", "lesshs"),
+         variable=replace(variable, variable=="B07009_003", "hs"),
+         variable=replace(variable, variable=="B07009_004", "somecollege"),
+         variable=replace(variable, variable=="B07009_005", "bach"),
+         variable=replace(variable, variable=="B07009_006", "grad"),
+         ) %>%
+  select(!groupnum)
+  
+```
+
+```{r}
+write.csv(NH_acs_cds_educ18, "NH_acs_cds_educ18.csv")
+
+
+
+```
+
+```{r}
+#extract 1-2 digit integer from variable name as shorthand for each variable
+library(stringr)
+NH_cds_black18 <-NH_cds_black18 %>%
+  mutate(groupnum = as.numeric(str_sub(variable, -3, -1)))
+  
+```
+
+```{r}
+#identify all pop variables for people 18 and over
+
+# combine those 18 and over
+#NH_cds_black18 %>%
+#  filter((between(groupnum, 7,16)) | (between(groupnum, 22, 31))) %>%
+#  mutate(over18 = TRUE)
+  
+#NH_cds_black18$over18 <- FALSE
+NH_cds_black18 <- NH_cds_black18 %>%
+  mutate(over18 = case_when((between(groupnum, 7,16)) | (between(groupnum, 22, 31)) ~ TRUE, TRUE ~ FALSE))
+  
+```
+
+```{r}
+"
+sum_sqrt <- function(nums) {
+  squares <- c()
+  for (num in nums) {
+    squares <- append(squares, num^2)
+  }
+  sq_root <- sqrt(sum(squares))
+  return(sq_root)
+  
+}
+
+sum_sqrt(c(3,4))
+"
+
+```
+
+```{r}
+NH_cds_black18group <- NH_cds_black18 %>% 
+  group_by(over18, NAME) %>% 
+  #summarise(estimate = sum(estimate), moe_sum = sum(moe), moe_sqrtsum = sum_sqrt(moe)) %>%
+  summarise(estimate = sum(estimate), moe_sum = moe_sum(moe, estimate)) %>%
+  filter(over18==TRUE & estimate > 0)
+```
+
+## Total Population
+
+```{r}
+#extract last 3 numbers of variable and convert to integer
+NH_cds_total18 <-NH_cds_total18 %>%
+  mutate(groupnum = as.numeric(str_sub(variable, -3, -1)))
+
+#group by over 18
+NH_cds_total18 <- NH_cds_total18 %>%
+  mutate(over18 = case_when((between(groupnum, 7,25)) | (between(groupnum, 31, 49)) ~ TRUE, TRUE ~ FALSE))
+
+#sum up all over 18
+NH_cds_total18group <- NH_cds_total18 %>% 
+  group_by(over18, NAME) %>% 
+  summarise(estimate = sum(estimate), moe_sum = moe_sum(moe, estimate)) %>%
+  filter(over18==TRUE & estimate > 0)
+```
+
+```{r}
+
+
+
+```
+
+```{r}
+
+
+```
+
+```{r}
+
+
+```

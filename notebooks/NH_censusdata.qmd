@@ -64,7 +64,7 @@ Sys.getenv("CENSUS_API_KEY")
 
 NH_congdists <- get_decennial(geography = "congressional district", 
                          state = "NH", 
-                         variables = c("P5_002N"),
+                         variables = c("P1_001N"),
                          year = 2020)
 head(NH_congdists)
 ```
