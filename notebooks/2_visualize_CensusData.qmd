@@ -171,6 +171,14 @@ med_age2 %>%
 
 see: <https://stackoverflow.com/questions/13757771/relocating-alaska-and-hawaii-on-thematic-map-of-the-usa-with-ggplot2>
 
+## Exercise
+
+1.  Run the code cell below to import a dataset on housing tenure.
+
+2.  Create a new column that records the percent of each state's households that are owned (rather than rented)
+
+3.  Map this data.
+
 ### Household Tenure
 
 ```{r}
@@ -180,7 +188,13 @@ housing_tenure <- get_decennial(
                                 variable = c(households = "H12_001N",
                                              owner_hh = "H12_002N",
                                              renter_hh = "H12_010N"),
+                                geometry=TRUE,
                                 year=2020                                 
                                 ) 
 head(housing_tenure)
+```
+
+```{r}
+
+
 ```
