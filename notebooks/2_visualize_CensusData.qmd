@@ -1,0 +1,186 @@
+---
+title: "2_CensusData_visualize"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidycensus)
+library(tidyverse)
+Sys.getenv("CENSUS_API_KEY")
+```
+
+## Get Data
+
+### Median Age by State
+
+```{r}
+med_age <- get_acs(geography = "state", 
+                   variables = c("B01002_001"), 
+                   year = 2022)
+
+```
+
+```{r}
+vars_dhc <- load_variables(2020, "dhc", cache=TRUE)
+
+```
+
+## 4. Visualizing Results: States by Age of Population
+
+```{r}
+#library(ggplot2)  
+med_age %>%   
+  ggplot(aes(x=estimate, y=reorder(NAME, estimate))) +
+  geom_point()
+```
+
+```{r fig.align="center", echo = FALSE,fig.width = 14}
+med_age %>%
+  ggplot(aes(x=estimate, y=reorder(NAME, estimate))) + 
+  geom_point() +
+  theme_classic()
+```
+
+```{r fig.align="center", fig.width = 14}
+
+med_age %>% 
+  ggplot(aes(x=estimate, y=reorder(NAME, estimate))) + 
+  geom_point(color="red", size=3) + 
+  ggtitle("Median Age of Population by State") +
+  xlab("Median Age (ACS)") +
+  ylab("State") +
+  theme_light() +
+  theme(plot.title = element_text(color="blue", size=28))
+
+```
+
+## Visualizing Results 2: Household Income (NH counties)
+
+```{r}
+nh_medinc <- get_acs(geography = "county", 
+              variables = c(medincome = "B19013_001"), 
+              state = "NH", 
+              year = 2022)
+
+```
+
+```{r}
+
+nh_medinc %>%
+  mutate(NAME = gsub(" County, New Hampshire", "", NAME)) %>%
+  ggplot(aes(x = estimate, y = reorder(NAME, estimate))) +
+  geom_errorbarh(aes(xmin = estimate - moe, xmax = estimate + moe)) +
+  geom_point(color = "red", size = 3) +
+  labs(title = "Household income by county in New Hampshire",
+       subtitle = "2014-2018 American Community Survey",
+       y = "County",
+       x = "ACS estimate (bars represent margin of error)")
+```
+
+```{r}
+library(scales)
+nh_medinc %>%
+  mutate(NAME = gsub(" County, New Hampshire", "", NAME)) %>%
+  ggplot(aes(x = estimate, y = reorder(NAME, estimate))) +
+  geom_errorbarh(aes(xmin = estimate - moe, xmax = estimate + moe)) +
+  geom_point(color = "red", size = 3) +
+  labs(title = "Household income by county in New Hampshire",
+       subtitle = "2014-2018 American Community Survey",
+       y = "County",
+       x = "ACS estimate (bars represent margin of error)") +
+  scale_x_continuous(labels = comma)
+```
+
+## 5. Mapping Results
+
+One of the most powerful functions of tidycensus is the capability it offers to import geographic boundaries with its data, and thus map it relatively quickly.
+
+For example, we can import the exact same data we used at the beginning of the lesson (average age data from the 2010 census by state), but this time ask for the geometry of each geographic unit (in this case, states) to be included by setting the geometry argument as TRUE:
+
+```{r}
+
+'
+age10g <- get_decennial(geography = "state", 
+                       variables = "P013001", 
+                       geometry=TRUE,
+                       year = 2020)
+'
+med_age <- get_acs(geography = "state", 
+                   variables = c("B01002_001"),
+                   geometry=TRUE,
+                   year = 2022)
+
+```
+
+We can then plot this information by state using the following code:
+
+For more info, see: [Spatial Data in tidycensus](https://walker-data.com/tidycensus/articles/spatial-data.html)
+
+```{r}
+med_age %>%
+  ggplot(aes(fill=estimate))+
+  geom_sf(color=NA)
+
+```
+
+```{r}
+med_age %>%
+  ggplot(aes(fill=estimate))+
+  geom_sf(color=NA)+
+  xlim(-125, -65)+
+  ylim(-23, -55)
+
+```
+
+```{r}
+med_age %>%
+  ggplot(aes(fill=estimate))+
+  geom_sf(color=NA)+
+  xlim(-125, -65)+
+  ylim(-23, -55)+
+  scale_fill_viridis_c(option='magma')
+```
+
+This map uses a Meractor projection. Most geographers and cartographers have a deep dislike for the Mercator and the way it distorts area (i.e. minimizing Africa and exaggerating Greenland on a world map).
+
+Fortunately, depending on our needs we may choose another projection.
+
+Setting alternate projections, see: <https://ggplot2.tidyverse.org/reference/ggsf.html>
+
+```{r}
+med_age2<-sf::st_transform(med_age,"+proj=aea +lon_0=-115.3125 +lat_1=27.1867275 +lat_2=64.0187053 +lat_0=45.6027164 +datum=WGS84 +units=m +no_defs")
+
+med_age2 %>%
+  ggplot(aes(fill=estimate))+
+  geom_sf(color=NA)+
+  xlim(-800000, 3480000) +
+  ylim(2000000, -1100000) +
+  #xlim(-125, -65)+
+  #ylim(-23, -55)+
+  scale_fill_viridis_c(option='magma')+
+  labs(title = "Median Age by State",
+       subtitle = "Lighter = Older")
+
+
+
+
+```
+
+#### problem: mapping Alaska and Hawaii 
+
+see: <https://stackoverflow.com/questions/13757771/relocating-alaska-and-hawaii-on-thematic-map-of-the-usa-with-ggplot2>
+
+### Household Tenure
+
+```{r}
+housing_tenure <- get_decennial(
+                                geography = "state",                                 
+                                sumfile="dhc",                                 
+                                variable = c(households = "H12_001N",
+                                             owner_hh = "H12_002N",
+                                             renter_hh = "H12_010N"),
+                                year=2020                                 
+                                ) 
+head(housing_tenure)
+```

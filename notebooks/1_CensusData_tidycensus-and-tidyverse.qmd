@@ -247,7 +247,7 @@ Interesting variables:
 -   
 
     |  |  |  |  |  |
-    |----|----|----|----|----|
+    |---------------|---------------|---------------|---------------|---------------|
     |  | B07009_025 | Estimate!!Total:!!Moved from different state: | GEOGRAPHICAL MOBILITY IN THE PAST YEAR BY EDUCATIONAL ATTAINMENT FOR CURRENT RESIDENCE IN THE UNITED STATES | tract |
     | **122** | B07009_026 | Estimate!!Total:!!Moved from different state:!!Less than high school graduate | GEOGRAPHICAL MOBILITY IN THE PAST YEAR BY EDUCATIONAL ATTAINMENT FOR CURRENT RESIDENCE IN THE UNITED STATES | tract |
     | **123** | B07009_027 | Estimate!!Total:!!Moved from different state:!!High school graduate (includes equivalency) | GEOGRAPHICAL MOBILITY IN THE PAST YEAR BY EDUCATIONAL ATTAINMENT FOR CURRENT RESIDENCE IN THE UNITED STATES | tract |
@@ -403,16 +403,4 @@ med_age <- get_acs(geography = "state",
 med_age %>% arrange(desc(estimate))
 ```
 
-## 4. Visualizing Results
-
-```{r}
-library(ggplot2)
-
-med_age %>%
-  ggplot(aes(x=estimate, y=reorder(NAME, estimate))) +
-  geom_point()
-```
-
-\[more ggplot\]
-
-## 5. Mapping Results
+## 

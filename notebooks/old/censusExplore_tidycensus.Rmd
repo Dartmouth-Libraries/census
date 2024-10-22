@@ -29,7 +29,7 @@ c<-read_file(fileName)
 
 # census_api_key(c, install = TRUE, overwrite=TRUE)  #install - only have to run this line once
 # First time, reload your environment so you can use the key without restarting R.
-readRenviron("~/.Renviron")
+readRenviron("../../.Renviron")
 # You can check it with:
 Sys.getenv("CENSUS_API_KEY")
 
