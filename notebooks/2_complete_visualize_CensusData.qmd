@@ -17,7 +17,9 @@ library(tidyverse)
 In the ACS dataset, the median age is stored in variable "B01002_001".
 
 ```{r}
-
+med_age <- get_acs(geography = "state", 
+                   variables = c("B01002_001"), 
+                   year = 2022)
 
 ```
 
@@ -37,20 +39,33 @@ dfname %>%
 ```
 
 ```{r}
-
+#library(ggplot2)  
+med_age %>%   
+  ggplot(aes(x=estimate, y=reorder(NAME, estimate))) +
+  geom_point()
 ```
 
 Let's adjust R Studio's settings to create a larger plot and then change the theme of the plot by adding `+ theme_classic()`.
 
 ```{r fig.align="center", echo = FALSE,fig.width = 14}
-
+med_age %>%
+  ggplot(aes(x=estimate, y=reorder(NAME, estimate))) + 
+  geom_point() +
+  theme_classic()
 ```
 
 Now let's change the color and size of the dots and add some labels.
 
 ```{r fig.align="center", fig.width = 14}
 
-
+med_age %>% 
+  ggplot(aes(x=estimate, y=reorder(NAME, estimate))) + 
+  geom_point(color="red", size=3) + 
+  ggtitle("Median Age of Population by State") +
+  xlab("Median Age (ACS)") +
+  ylab("State") +
+  theme_light() +
+  theme(plot.title = element_text(color="blue", size=28))
 
 ```
 

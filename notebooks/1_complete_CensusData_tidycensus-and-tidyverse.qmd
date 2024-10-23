@@ -65,44 +65,40 @@ The **packrat** R library allows you to create and work with virtual environment
 
 ```{r}
 packrat::on() 
-
 ```
 
 ### 1b. TO ACQUIRE A CENSUS API KEY
 
-1.  Request a key [here](https://api.census.gov/data/key_signup.html). Then check your email, select "click here to activate your key."
-2.  Save the key in a secure location on your computer.
+1.  Request a key [here](https://api.census.gov/data/key_signup.html).
 
-**Two Options for storing the key**
+    1.  Then check your email, select "click here to activate your key."
+    2.  Save the key in a secure location on your computer.
 
-**Option 1**
+    **Two Options for storing the key**
 
-1.  Copy and paste the key into the code below.
-2.  If you plan on sharing this code or storing it on Github, delete the key from this script after running it. The `install = TRUE` will store the key in your .Renviron file so you only need to run this code once.
-3.  Restart R. .Renviron is only processed at the start of an R session. As an alternative, you can also run \`readRenviron("\~/.Renviron") to reload your environment without restarting.
+    **Option 1**
 
-```{r}
-#census_api_key("{insert census api key here}", install = TRUE)
-#readRenviron("~/.Renviron") 
+    1.  Copy and paste the key into the code below.
+    2.  If you plan on sharing this code or storing it on Github, delete the key from this script after running it. The `install = TRUE` will store the key in your .Renviron file so you only need to run this code once.
+    3.  Restart R. .Renviron is only processed at the start of an R session. As an alternative, you can also run \`readRenviron("\~/.Renviron") to reload your environment without restarting.
 
-```
+    `{r} census_api_key("{insert census api key here}", install = TRUE) #readRenviron("~/.Renviron")}`
 
-**Option 2: direct input into .Renviron file**
+    **Option 2: direct input into .Renviron file**
 
-1.  Save the key in a plain text file that you save as ".Renviron" in the root directory of this project. In the top line of this document, record the API Key like this:
+    1.  Save the key in a plain text file that you save as ".Renviron" in the root directory of this project. In the top line of this document, record the API Key like this:
 
-`CENSUS_API_KEY={insert API key here}`
+    `CENSUS_API_KEY={insert API key here}`
 
-3.  Note: Unlike Python, in R you do not place quotes around the API Key.
+    3.  Note: Unlike Python, in R you do not place quotes around the API Key.
 
-4.  Note #2: The [.Renviron file must end with a new line](https://rstats.wtf/r-startup.html) so press RETURN after the line with the key to ensure there is a blank line at the end of this file. If you're using an editor that shows line numbers, there should be two lines, where the second one is empty.
+    4.  Note #2: The [.Renviron file must end with a new line](https://rstats.wtf/r-startup.html) so press RETURN after the line with the key to ensure there is a blank line at the end of this file. If you're using an editor that shows line numbers, there should be two lines, where the second one is empty.
 
-5.  Restart R. .Renviron is only processed at the start of an R session. As an alternative, you can also run \`readRenviron("\~/.Renviron") to reload your environment without restarting.
+    5.  Restart R. .Renviron is only processed at the start of an R session. As an alternative, you can also run \`readRenviron("\~/.Renviron") to reload your environment without restarting.
 
-To check if the Census Key can be properly retrieved, run the command below.
+    To check if the Census Key can be properly retrieved, run the command below.
 
 ```{r}
-
 #Sys.getenv("CENSUS_API_KEY")
 
 ```
@@ -126,7 +122,7 @@ Fortunately, if you want data from more recent censuses, you may import data dir
 ```{r}
 #INSTALL PACKAGES - only needed the first time you use this package 
 #install.packages("tidyverse")  
-#install.packages("tidycensus")   
+#install.packages("tidycensus")  
 
 # LOAD THEM 
 library(tidyverse)  
@@ -193,7 +189,8 @@ write.csv(vars2020acs, "acs5_2020_variables.csv", row.names=FALSE)
 In the cell below, let's examine the types of data stored in the other datasets such as the decennial census Demographic and Housing Characteristics ("dhc") dataset and the one-year ACS ("acs1") datasets. Then store the variable lists in a csv.
 
 ```{r}
-
+vars2020dhc <- load_variables(2020, "dhc", cache=TRUE)  
+write.csv(vars2020dhc, "DHC2020_variables.csv", row.names=FALSE)
 ```
 
 ## 2c. Tibbles & Dataframes
@@ -201,7 +198,7 @@ In the cell below, let's examine the types of data stored in the other datasets 
 Let's examine how the variable data is stored. In R, the `class` function (like Python's "type" function) returns the data type of an object. In the cell below, type `class({name of variable dataset imported above})`.
 
 ```{r}
-
+class(vars2020acs)
 ```
 
 This dataset contains nearly 30,000 variables! To better review all the data available we can:
@@ -257,32 +254,42 @@ Review the variable list for the 2020 decennial census. How would you go about a
 -   What NH county has the greatest proportion of people who identify as being of mixed race?
 
 ```{r}
-
+NH_mixedpop <- get_decennial(
+                    geography = "county", 
+                    state= "NH",
+                    variables = c("P1_001N", "P1_009N"),
+                    year = 2020) 
+head(NH_mixedpop)
 
 ```
 
 ### 3b. Reshape (pivot) the Data
 
 ```{r}
-
+NH_mixedpop_wide <- NH_mixedpop %>%
+  pivot_wider(names_from=variable, values_from=value)
+head(NH_mixedpop_wide)
 ```
 
 ### 3c. Rename columns
 
 ```{r}
-
+NH_mixedpop_wide <- NH_mixedpop_wide %>%
+  rename(totalpop = P1_001N, mixedpop = P1_009N)
 ```
 
 ### 3d. Create new columns
 
 ```{r}
-
+NH_mixedpop_wide <- NH_mixedpop_wide %>%
+  mutate(pct_mixed = mixedpop / totalpop * 100)
 ```
 
 ### 3e. Sort by column
 
 ```{r}
-
+NH_mixedpop_wide <- NH_mixedpop_wide %>%
+  arrange(desc(pct_mixed))
 ```
 
 ### 3f. Pipe multiple functions in sequence
@@ -311,17 +318,26 @@ NH_mixedpop_wide <- NH_mixedpop_wide %>%
 Now, try to answer the question: in what state do the greatest proportion of people identify as being of two races? Copy the code from the cells above and paste below. Then try tweaking this code by changing the geography level of your request data.
 
 ```{r}
-
-
-```
-
-```{r}
-
+US_mixedpop <- get_decennial(
+                    geography = "state", 
+                    variables = c("P1_001N", "P1_009N"),
+                    year = 2020) 
 
 ```
 
 ```{r}
+US_mixedpop_wide <- US_mixedpop %>%
+  pivot_wider(names_from=variable, values_from=value)
+head(US_mixedpop_wide)
 
+```
+
+```{r}
+US_mixedpop_wide <- US_mixedpop_wide %>%
+  rename(totalpop = P1_001N, mixedpop = P1_009N) %>%
+  mutate(pct_mixed = mixedpop / totalpop * 100) %>%
+  arrange(desc(pct_mixed))
+US_mixedpop_wide
 
 ```
 
@@ -332,28 +348,39 @@ Now, let's try answering the research question you identified in the previous ex
 Using the ACS dataset and the **get_acs** function, import the data you need to answer that question.
 
 ```{r}
-
-
-```
-
-```{r}
-
+same_house <- get_acs(
+                    geography = "county",
+                    variables = c("B07001_017", "B07001_001"),
+                    year = 2022)
 
 ```
 
 ```{r}
-
-```
-
-## For Notebook 2: Does NH have the oldest population in the country?
-
-```{r}
-
+same_house_wider <- same_house %>%
+  pivot_wider(names_from=variable, values_from = c(estimate, moe))
 
 ```
 
 ```{r}
+same_house_wider <- same_house_wider %>%
+  rename(totalpop_est = estimate_B07001_001, 
+         samehouse_est=estimate_B07001_017) %>%
+  mutate(samehouse_pct = samehouse_est / totalpop_est * 100,
+         notsamehouse_pct = (totalpop_est - samehouse_est) / totalpop_est * 100) %>%
+  arrange(desc(notsamehouse_pct))
+```
 
+## Exercise: Does NH have the oldest population in the country?
+
+```{r}
+med_age <- get_acs(geography = "state", 
+                   variables = c("B01002_001"), 
+                   year = 2020)
+
+```
+
+```{r}
+med_age %>% arrange(desc(estimate))
 ```
 
 ## 

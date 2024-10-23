@@ -27,7 +27,7 @@ In Python, users typically use the **venv** library to create and use virtual en
 
 To set up a local virtual environment with packrat:\\
 
-1.   First, install packrat using `install.packages("packrat")`.
+1.  First, install packrat using `install.packages("packrat")`.
 2.  From within your project folder, initialize it using the command `packrat::init()`.
 3.  R should activite your new virtual environment automatically whenever you work in that project folder. To ensure it is activated, however, you can run the code `packrat::on()`. To deactivate, simply run `packrat::off()`.
 
@@ -69,8 +69,26 @@ library(tidyverse)
 #tidyverse_packages()
 ```
 
+## Retrieve Data
+
+Get one row
+
 ```{r}
-starwars
+starwars[1,]
+```
+
+Get one cell
+
+```{r}
+
+starwars$name[4]
+```
+
+Get item in list
+
+```{r}
+print(starwars$starships[1])
+starwars$starships[[1]][1]
 
 ```
 
@@ -115,7 +133,7 @@ starwars %>%
   lm(mass ~ height, data = .)
 ```
 
-```{}
+```         
 ```
 
 ## Tidy Data
@@ -145,11 +163,21 @@ As you work with data, you will be surprised to realize that what is a variable 
 ```{r}
 omitb <- tribble(~name, ~occupation, ~apartment, ~is_suspect, ~is_dead,
             "Charles", "washed-up actor", "14C", "no", "no",
-            "Mabel", "unemployed never-war", "12E", "no", "no",
+            "Mabel", "unemployed never-was", "12E", "maybe", "no",
             "Oliver", "theater director", "10D", "no", "no",
             "Howard", "childless cat guy", "3D", "yes", "no",
             "Bunny", "petty despot", "12A", "no", "maybe"
 )
+omitb
+```
+
+Add new row
+
+```{r}
+omitb <- omitb %>%
+  add_row(name="Jan", occupation = "2nd-chair basoonist", is_suspect="yes", is_dead="no",
+          .before=1)
+
 omitb
 ```
 
@@ -160,7 +188,7 @@ You can also create the same tibble using the **tibble** function this way
 ```{r}
 tibble(name = c("Charles", "Mabel", "Oliver", "Howard", "Bunny"),
        occupation = c("washed-up actor", "unemployed never-was", "theater director", "childless cat guy", "petty despot"),
-       apartment = c("12D", "14C", "10A", "6F", "1A"),
+       apartment = c("14C", "12E", "10D", "3D", "12A"),
        is_suspect = c("no", "no", "no", "yes", "no"),
        is_dead = c("no", "no", "no", "no", "maybe"),
        )
@@ -169,7 +197,7 @@ tibble(name = c("Charles", "Mabel", "Oliver", "Howard", "Bunny"),
 ## Dataframes vs. tibbles
 
 ```{r}
-df <- read.csv("census/data/census1970.csv") 
+df <- read.csv("../data/census1970.csv") 
 
 ```
 
@@ -186,41 +214,41 @@ df2tib <- as_tibble(df)
 
 # Common Data Science Operations in Tidyverse
 
-+------------------------------------+------------------------------------------+----------------------------+--------------------------------------+
-| Task                               | Python - Pandas                          | Base R                     | Tidyverse (R)                        |
-+====================================+==========================================+============================+======================================+
-| **Sort table by column**           | df.sort_values('col')                    | sort(df\$col)              | df %\>%                              |
-|                                    |                                          |                            |                                      |
-|                                    |                                          |                            | arrange(col)                         |
-+------------------------------------+------------------------------------------+----------------------------+--------------------------------------+
-| **Filter rows**                    | df.loc\[df\['col'\]\>0,:\]               | df\[df\[col\] \> 0, \]     | df %\>%                              |
-|                                    |                                          |                            |                                      |
-|                                    |                                          |                            | filter(col \> 0)                     |
-+------------------------------------+------------------------------------------+----------------------------+--------------------------------------+
-| **Subset columns**                 |                                          |                            | df %\>%                              |
-|                                    |                                          |                            |                                      |
-|                                    |                                          |                            | select(col)                          |
-+------------------------------------+------------------------------------------+----------------------------+--------------------------------------+
-| **Create a new column**            | df.loc\[:, "square"\] = df\[col\] \*\* 2 | df\$square = df\[col\] \^2 | df %\>%                              |
-|                                    |                                          |                            |                                      |
-|                                    |                                          |                            | mutate(square = col \^ 2)            |
-+------------------------------------+------------------------------------------+----------------------------+--------------------------------------+
-| **Perform calculation on column**  | sum(df\["col"\])                         | sum(df\$col)               | df %\>%                              |
-|                                    |                                          |                            |                                      |
-|                                    |                                          |                            | summarise(sumcol = sum(col))         |
-+------------------------------------+------------------------------------------+----------------------------+--------------------------------------+
-| **Delete duplicate rows**          | df.drop_duplicates()                     | df\[!duplicated(df), \]    | df %\>%                              |
-|                                    |                                          |                            |                                      |
-|                                    |                                          |                            | distinct()                           |
-+------------------------------------+------------------------------------------+----------------------------+--------------------------------------+
-| **Group/Apply/Combine**            | df.groupby("col").sum()                  | by(df, col, sum(x))        | df %\>%                              |
-|                                    |                                          |                            |                                      |
-|                                    |                                          | ???                        | group_by(col) %\>%                   |
-|                                    |                                          |                            |                                      |
-|                                    |                                          |                            | summarise(groupsum = sum(col2))      |
-+------------------------------------+------------------------------------------+----------------------------+--------------------------------------+
-| **Reshape data from wide to long** | *pd.wide_to_long()*                      | *melt()*                   | *use pivot_longer()*                 |
-+------------------------------------+------------------------------------------+----------------------------+--------------------------------------+
++------------------------------------+------------------------------------------+----------------------------+---------------------------------+
+| Task                               | Python - Pandas                          | Base R                     | Tidyverse (R)                   |
++====================================+==========================================+============================+=================================+
+| **Sort table by column**           | df.sort_values('col')                    | sort(df\$col)              | df %\>%                         |
+|                                    |                                          |                            |                                 |
+|                                    |                                          |                            | arrange(col)                    |
++------------------------------------+------------------------------------------+----------------------------+---------------------------------+
+| **Filter rows**                    | df.loc\[df\['col'\]\>0,:\]               | df\[df\[col\] \> 0, \]     | df %\>%                         |
+|                                    |                                          |                            |                                 |
+|                                    |                                          |                            | filter(col \> 0)                |
++------------------------------------+------------------------------------------+----------------------------+---------------------------------+
+| **Subset columns**                 |                                          |                            | df %\>%                         |
+|                                    |                                          |                            |                                 |
+|                                    |                                          |                            | select(col)                     |
++------------------------------------+------------------------------------------+----------------------------+---------------------------------+
+| **Create a new column**            | df.loc\[:, "square"\] = df\[col\] \*\* 2 | df\$square = df\[col\] \^2 | df %\>%                         |
+|                                    |                                          |                            |                                 |
+|                                    |                                          |                            | mutate(square = col \^ 2)       |
++------------------------------------+------------------------------------------+----------------------------+---------------------------------+
+| **Perform calculation on column**  | sum(df\["col"\])                         | sum(df\$col)               | df %\>%                         |
+|                                    |                                          |                            |                                 |
+|                                    |                                          |                            | summarise(sumcol = sum(col))    |
++------------------------------------+------------------------------------------+----------------------------+---------------------------------+
+| **Delete duplicate rows**          | df.drop_duplicates()                     | df\[!duplicated(df), \]    | df %\>%                         |
+|                                    |                                          |                            |                                 |
+|                                    |                                          |                            | distinct()                      |
++------------------------------------+------------------------------------------+----------------------------+---------------------------------+
+| **Group/Apply/Combine**            | df.groupby("col").sum()                  | by(df, col, sum(x))        | df %\>%                         |
+|                                    |                                          |                            |                                 |
+|                                    |                                          | ???                        | group_by(col) %\>%              |
+|                                    |                                          |                            |                                 |
+|                                    |                                          |                            | summarise(groupsum = sum(col2)) |
++------------------------------------+------------------------------------------+----------------------------+---------------------------------+
+| **Reshape data from wide to long** | *pd.wide_to_long()*                      | *melt()*                   | *use pivot_longer()*            |
++------------------------------------+------------------------------------------+----------------------------+---------------------------------+
 
 ## Sort Table (tibble)
 
